@@ -1,0 +1,65 @@
+@font-face {
+  font-family: "Circular";
+  src: url("../fonts/CircularStd-Book.otf");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Circular";
+  src: url("../fonts/CircularStd-Medium.otf");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Circular";
+  src: url("../fonts/CircularStd-Black.otf");
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Circular";
+  src: url("../fonts/CircularStd-Bold.otf");
+  font-style: normal;
+  font-weight: bold;
+  font-display: swap;
+}
+
+body {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+/* ::-webkit-scrollbar {
+  width: 0px;
+}
+::-moz-scrollbar {
+  width: 0px;
+} */
+.container-body::-webkit-scrollbar {
+  width: 5px;
+  height: 6px;
+}
+.container-body::-moz-scrollbar {
+  width: 5px;
+  height: 6px;
+}
+/* Track */
+.container-body::-webkit-scrollbar-track {
+  background: #edf2f7;
+}
+
+/* Handle */
+.container-body::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+.container-body::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
