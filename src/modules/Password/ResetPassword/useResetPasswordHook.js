@@ -35,9 +35,8 @@ export default function useResetPasswordHook() {
     }
 
     setIsLoading(true);
-    Axios.post(BASE_API_URL + "/reset-password", {
+    Axios.post(BASE_API_URL + "/password_reset/confirm/", {
       password: password,
-      password_confirmation: confirmPassword,
       token: query.token,
       email: query.email,
     })
