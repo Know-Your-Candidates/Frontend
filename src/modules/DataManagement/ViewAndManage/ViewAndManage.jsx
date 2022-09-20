@@ -21,10 +21,10 @@ import { MdOutlineCloudUpload } from "react-icons/md";
 import ImportCSV from "./components/ImportCSV";
 import ManageCSV from "./components/ManageCSV";
 
-export default function DataAnalytics() {
+export default function DataManagement() {
   return (
     <AdminLayout>
-      <Box pt={16} pl={16} pr={12}>
+      <Box pt={[8, 8, 16]} pl={["6%", "6%", 16]} pr={["6%", "6%", 12]}>
         <Heading fontSize={32}>Data Management</Heading>
 
         <Divider mt={4} mb={12} />

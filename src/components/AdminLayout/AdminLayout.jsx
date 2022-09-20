@@ -2,6 +2,7 @@ import {
   Avatar,
   AvatarBadge,
   Box,
+  Button,
   Flex,
   HStack,
   Icon,
@@ -22,6 +23,8 @@ import React from "react";
 import { navLinks } from "utils/constants";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { BiLogOut } from "react-icons/bi";
+import { TiUserOutline } from "react-icons/ti";
 
 export default function AdminLayout({ children }) {
   const router = useRouter();
@@ -42,7 +45,7 @@ export default function AdminLayout({ children }) {
             <Logo pl={4} maxW={100} />
             <Stack spacing={4}>
               {navLinks.map(({ name, icon, href }) => {
-                const isSelected = router.asPath === href;
+                const isSelected = router.asPath.includes(href);
                 return (
                   <Link href={href} key={href}>
                     <HStack
@@ -113,11 +116,31 @@ export default function AdminLayout({ children }) {
                     <Avatar name="AK" width={8} height={8} />
                   </HStack>
                 </MenuButton>
-                <MenuList color="blue.800">
+                <MenuList px={1} py={2} color="blue.800">
                   <MenuItem
-                    onClick={() => Router.push("/login")}
                     fontWeight={500}
-                    color="red.400"
+                    as={Button}
+                    variant="ghost"
+                    bg="transparent"
+                    justifyContent="flex-start"
+                    onClick={() => Router.push("/admin/accounts")}
+                    leftIcon={<TiUserOutline />}
+                    iconSpacing={10}
+                    color="primary.500"
+                  >
+                    Account
+                  </MenuItem>
+                  <MenuDivider m={0} />
+                  <MenuItem
+                    as={Button}
+                    variant="ghost"
+                    bg="transparent"
+                    justifyContent="flex-start"
+                    leftIcon={<BiLogOut />}
+                    iconSpacing={10}
+                    onClick={() => Router.push("/admin/login")}
+                    fontWeight={500}
+                    color="gray.500"
                   >
                     Sign out
                   </MenuItem>

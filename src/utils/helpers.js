@@ -15,11 +15,11 @@ const getErrorMessage = (error) => {
 
     return `${errorKey}: ${errorMessage}`;
   } else if (error.status == 401) {
-    return error?.data?.error;
+    return error?.data?.error?.detail;
   } else if (error.status == 400 || error.status == 403) {
     return error?.data?.message;
   } else {
-    return error?.data?.message || "Kindly try again later";
+    return error?.data?.message || "Please try again later";
   }
 };
 
@@ -30,7 +30,7 @@ export const toastError = (title, error, description, stay) => {
     title: title || "Error",
     description: description || getErrorMessage(error),
     duration: stay ? null : 4000,
-    position: "top",
+    position: "top-right",
     variant: "top-accent",
   });
 };

@@ -1,15 +1,15 @@
 import { Box } from "@chakra-ui/react";
-import DataAnalytics from "modules/DataManagement/DataAnalytics/DataAnalytics";
+import DataManagement from "modules/DataManagement/ViewAndManage/ViewAndManage";
 import Head from "next/head";
 import React from "react";
 
-export default function DataAnalyticsPage() {
+export default function DataManagementPage() {
   return (
     <Box>
       <Head>
-        <title>Data Analytics - Know your Candidate</title>
+        <title>Data Management - Know your Candidate</title>
       </Head>
-      <DataAnalytics />
+      <DataManagement />
     </Box>
   );
 }

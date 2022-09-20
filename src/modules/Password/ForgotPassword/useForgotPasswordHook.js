@@ -27,7 +27,7 @@ export default function useForgotPasswordHook() {
     event.preventDefault();
 
     setIsLoading(true);
-    Axios.post(BASE_API_URL + "/forgot-password", forgotPasswordDetails)
+    Axios.post(BASE_API_URL + "/password_reset/", forgotPasswordDetails)
       .then(({ data }) => {
         console.log(data);
         toastSuccess(
