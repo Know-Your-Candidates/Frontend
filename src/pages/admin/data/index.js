@@ -2,8 +2,9 @@ import { Box } from "@chakra-ui/react";
 import DataManagement from "modules/DataManagement/ViewAndManage/ViewAndManage";
 import Head from "next/head";
 import React from "react";
+import { withAuth } from "utils/withAuth";
 
-export default function DataManagementPage() {
+function DataManagementPage() {
   return (
     <Box>
       <Head>
@@ -13,3 +14,5 @@ export default function DataManagementPage() {
     </Box>
   );
 }
+
+export default withAuth(DataManagementPage);

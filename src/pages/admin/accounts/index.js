@@ -2,8 +2,9 @@ import React from "react";
 import { Box } from "@chakra-ui/react";
 import AccountManagement from "modules/AccountManagement/AccountManagement";
 import Head from "next/head";
+import { withAuth } from "utils/withAuth";
 
-export default function AccountManagementPage() {
+function AccountManagementPage() {
   return (
     <Box>
       <Head>
@@ -13,3 +14,5 @@ export default function AccountManagementPage() {
     </Box>
   );
 }
+
+export default withAuth(AccountManagementPage);

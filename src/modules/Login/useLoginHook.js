@@ -39,7 +39,8 @@ export default function useLoginHook(previousRoute) {
     setIsLoading(true);
     Axios.post(BASE_API_URL + "/users/login/", loginDetails)
       .then(({ data }) => {
-        localStorage.setItem("kyc_acccess_token", data?.jwt); // Save access token to localStorage
+        console.log(data);
+        localStorage.setItem("kyc_acccess_token", data?.data?.access); // Save access token to localStorage
         dispatch(setUserDetails(data.user)); // Then set the user details in the redux store
         if (query.redirect == "true") {
           Router.back(); // go to the previous route

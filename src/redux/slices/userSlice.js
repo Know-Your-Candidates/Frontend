@@ -6,7 +6,9 @@ export const fetchUserDetails = createAsyncThunk(
   "user/fetchUserDetails",
   async (query, thunkAPI) => {
     try {
-      const { data } = await Axios.get(`${BASE_API_URL}/users/user/me/`, {
+      const {
+        data: { data },
+      } = await Axios.get(`${BASE_API_URL}/users/user/me/`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("kyc_acccess_token")}`,
         },

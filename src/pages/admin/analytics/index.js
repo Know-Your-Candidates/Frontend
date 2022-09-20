@@ -2,8 +2,9 @@ import React from "react";
 import { Box } from "@chakra-ui/react";
 import DataAnalytics from "modules/DataAnalytics/DataAnalytics";
 import Head from "next/head";
+import { withAuth } from "utils/withAuth";
 
-export default function DataAnalyticsPage() {
+function DataAnalyticsPage() {
   return (
     <Box>
       <Head>
@@ -13,3 +14,5 @@ export default function DataAnalyticsPage() {
     </Box>
   );
 }
+
+export default withAuth(DataAnalyticsPage);

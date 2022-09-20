@@ -19,9 +19,17 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { Logo } from "components/Logo/Logo";
-import React from "react";
+import React, { useState } from "react";
+import Router from "next/router";
 
 export default function LandingPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSubmitQuery = (event) => {
+    event.preventDefault();
+    Router.push(`/search?query=${searchQuery}`);
+  };
+
   return (
     <Box>
       <Stack
@@ -46,13 +54,13 @@ export default function LandingPage() {
                 </ChakraLink>
               </Link>
 
-              <Link href="/about">
+              {/* <Link href="/about">
                 <ChakraLink fontWeight={500}>About</ChakraLink>
-              </Link>
-
-              {/* <Link href="/search">
-                <ChakraLink fontWeight={500}>Search</ChakraLink>
               </Link> */}
+
+              <Link href="/search">
+                <ChakraLink fontWeight={500}>Search</ChakraLink>
+              </Link>
             </HStack>
           </HStack>
 
@@ -93,10 +101,18 @@ export default function LandingPage() {
                 rounded={12}
                 borderBottom="4px solid"
                 borderColor="primary.200"
+                onSubmit={handleSubmitQuery}
                 px={[4, 8]}
+                as="form"
               >
                 <Icon as={Search2Icon} boxSize={15} />
-                <Input variant="unstyled" size="lg" />
+                <Input
+                  isRequired
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  variant="unstyled"
+                  size="lg"
+                />
                 <Divider orientation="vertical" maxH={38} />
                 <Select variant="unstyled" size={["sm", "sm", "lg"]} maxW={170}>
                   <option value="Political parties">Political parties</option>

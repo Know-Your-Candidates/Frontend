@@ -7,8 +7,8 @@ import { clearStates, fetchUserDetails } from "../redux/slices/userSlice";
 export const withAuth = (Component) => {
   return function Auth(props) {
     const dispatch = useDispatch();
-    const [isAuthorized, setIsAuthorized] = useState(false);
     const { userDetails, error } = useSelector((state) => state.user);
+    const [isAuthorized, setIsAuthorized] = useState(false);
 
     useEffect(() => {
       // Show desired page as soon as userDetails have been loaded to the redux store

@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userReducer from "./slices/userSlice";
+import candidateReducer from "./slices/candidateSlice";
 
 //Import individual slices and configure store
 
 const combinedReducer = combineReducers({
   user: userReducer,
+  candidates: candidateReducer,
 });
 
 const rootReducer = (state, action) => {
