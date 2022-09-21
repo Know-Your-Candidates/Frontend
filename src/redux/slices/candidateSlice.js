@@ -6,7 +6,9 @@ export const fetchCandidates = createAsyncThunk(
   "candidates/fetchCandidates",
   async (fetchPayload, thunkAPI) => {
     try {
-      const { data } = await Axios.get(`${BASE_API_URL}/candidates/`, {
+      const {
+        data: { data },
+      } = await Axios.get(`${BASE_API_URL}/candidates/without-location/`, {
         params: fetchPayload,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("kyc_acccess_token")}`,
@@ -24,7 +26,9 @@ export const searchCandidates = createAsyncThunk(
   "candidates/searchCandidates",
   async (searchPayload, thunkAPI) => {
     try {
-      const { data } = await Axios.get(`${BASE_API_URL}/candidates/`, {
+      const {
+        data: { data },
+      } = await Axios.get(`${BASE_API_URL}/candidates/`, {
         params: searchPayload,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("kyc_acccess_token")}`,
@@ -113,7 +117,8 @@ export const deleteCandidate = createAsyncThunk(
 const candidateSlice = createSlice({
   name: "candidates",
   initialState: {
-    candidates: [],
+    candidates: { results: [] },
+    filterOptions: {},
     loading: "FETCH_CANDIDATES",
     error: "",
     success: "",
@@ -127,7 +132,7 @@ const candidateSlice = createSlice({
   },
   extraReducers: {
     [fetchCandidates.pending]: (state) => {
-      state.candidates = [];
+      state.candidates = { results: [] };
       delete state.error;
       delete state.success;
       state.loading = "FETCH_CANDIDATES";

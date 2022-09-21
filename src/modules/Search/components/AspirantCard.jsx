@@ -21,24 +21,32 @@ import { BsArrowLeft } from "react-icons/bs";
 import { CgOptions } from "react-icons/cg";
 import { GrFlag } from "react-icons/gr";
 
-export default function AspirantCard({ setSelectedAspirant }) {
+export default function AspirantCard({ aspirant, setSelectedAspirant }) {
   return (
     <GridItem cursor="pointer">
-      <Image src="/images/aspirant.png" />
+      <Stack
+        align="flex-end"
+        rounded={8}
+        bgImage={aspirant.candidate_image}
+        w="full"
+        h={237}
+      >
+        <Image boxSize={70} rounded={8} src={aspirant.candidate_image} />
+      </Stack>
       <HStack justify="space-between">
-        <Text>Peter Obi</Text>
+        <Text textTransform="capitalize">{aspirant.name}</Text>
 
         <HStack>
           <Icon as={GrFlag} />
-          <Text>LP</Text>
+          <Text>{aspirant.party}</Text>
         </HStack>
       </HStack>
       <HStack mt={18} justify="space-between">
-        <Text>Male</Text>
+        <Text>{aspirant.gender}</Text>
       </HStack>
 
       <Button
-        onClick={() => setSelectedAspirant(1)}
+        onClick={() => setSelectedAspirant(aspirant.id)}
         mt={19}
         rounded={12}
         colorScheme="black"

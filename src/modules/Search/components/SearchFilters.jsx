@@ -24,7 +24,7 @@ import React from "react";
 import { CgOptions } from "react-icons/cg";
 import { filterOptions } from "utils/constants";
 
-export default function SearchFilters() {
+export default function SearchFilters({ changeFilterValue }) {
   const modalDisclosure = useDisclosure();
   const collapsibleDisclosure = useDisclosure();
 

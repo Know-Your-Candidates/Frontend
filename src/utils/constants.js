@@ -5,11 +5,11 @@ export const BASE_API_URL = process.env.NEXT_PUBLIC_BASE_API_URL;
 export const filterOptions = [
   {
     name: "Gender",
-    options: [],
+    options: ["male", "female"],
   },
   {
     name: "Age bracket",
-    options: [],
+    options: ["18 - 30", "30 - 45", "46 - 59", "60 - 79", "80 +"],
   },
   {
     name: "Year contested",

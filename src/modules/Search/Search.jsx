@@ -30,6 +30,8 @@ export default function Search() {
   const {
     query,
     setQuery,
+    candidates,
+    changeFilterValue,
     selectedAspirant,
     setSelectedAspirant,
     backToSearchResults,
@@ -110,7 +112,7 @@ export default function Search() {
             </Heading>
           )}
 
-          <SearchFilters />
+          <SearchFilters changeFilterValue={changeFilterValue} />
 
           <Grid
             templateColumns={[
@@ -119,13 +121,14 @@ export default function Search() {
               "repeat(3, 1fr)",
               "repeat(4, 1fr)",
             ]}
-            columnGap={3}
+            columnGap={8}
             rowGap={12}
           >
-            {[0, 1, 2, 3, 4, 5, 6].map((index) => (
+            {candidates.results.map((aspirant) => (
               <AspirantCard
+                aspirant={aspirant}
                 setSelectedAspirant={setSelectedAspirant}
-                key={index}
+                key={aspirant.id}
               />
             ))}
           </Grid>
