@@ -1,34 +1,54 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCandidates } from "redux/slices/candidateSlice";
+import {
+  fetchCandidates,
+  fetchFilterOptions,
+} from "redux/slices/candidateSlice";
+import debounce from "lodash.debounce";
 
-const filters = [
-  "gender",
-  "min_age",
-  "max_age",
-  "year",
-  "position",
-  "party",
-  "qualifications",
-  "state",
-  "senatorial_district",
-  "federal_constituency",
-  "state_constituency",
-  "lga",
-  "ward",
-  "polling_unit",
-];
+const filters = {
+  gender: ["Male", "Female"],
+  age_bracket: ["18 - 30", "30 - 45", "46 - 59", "60 - 79", "80 +"],
+  year: [],
+  position: [],
+  party: [],
+  qualifications: [],
+  state: [],
+  senatorial_district: [],
+  federal_constituency: [],
+  state_constituency: [],
+  lga: [],
+  ward: [],
+  polling_unit: [],
+};
 
-export default function useSearch() {
-  const { candidates } = useSelector((state) => state.candidates);
+export default function useSearchHook() {
+  const { candidates, loading } = useSelector((state) => state.candidates);
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
-  const [selectedFilters, setSelectedFilters] = useState({});
+  const [filterList, setFilterList] = useState({});
+  const [filterOptions, setFilterOptions] = useState(filters);
   const [selectedAspirant, setSelectedAspirant] = useState(null);
   const { query: urlQuery } = useRouter();
 
-  useEffect(() => {}, []);
+  const fetchInitialOptions = async () => {
+    try {
+      const results = await Promise.all(
+        Object.keys(filterOptions)
+          .slice(2, 7)
+          .map((key) => {
+            return dispatch(fetchFilterOptions({ filter: key })).unwrap();
+          })
+      );
+
+      changeFilterOptions(Object.assign({}, ...results));
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    fetchInitialOptions();
+  }, []);
 
   useEffect(() => {
     if (urlQuery.query) setQuery(urlQuery.query);
@@ -38,12 +58,31 @@ export default function useSearch() {
     dispatch(
       fetchCandidates({
         page: 1,
+        name: query || undefined,
+        ...filterList,
       })
     );
-  }, [filters]);
+  }, [filterList]);
 
-  const changeFilterValue = (key, value) => {
-    setSelectedFilters({ ...selectedFilters, [key]: value });
+  const debouncedOnChange = useCallback(
+    debounce((value) => {
+      dispatch(
+        fetchCandidates({
+          page: 1,
+          name: value || undefined,
+          ...filterList,
+        })
+      );
+    }, 300),
+    []
+  );
+
+  const changeFilterOptions = (updates) => {
+    setFilterOptions((prev) => ({ ...prev, ...updates }));
+  };
+
+  const updateFilterList = (updates) => {
+    setFilterList(updates);
   };
 
   const backToSearchResults = () => {
@@ -53,8 +92,13 @@ export default function useSearch() {
   return {
     query,
     setQuery,
-    changeFilterValue,
+    debouncedOnChange,
+    filterOptions,
+    changeFilterOptions,
+    filterList,
+    updateFilterList,
     candidates,
+    isLoading: loading === "FETCH_CANDIDATES",
     selectedAspirant,
     setSelectedAspirant,
     backToSearchResults,

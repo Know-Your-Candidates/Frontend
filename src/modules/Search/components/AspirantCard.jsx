@@ -46,7 +46,7 @@ export default function AspirantCard({ aspirant, setSelectedAspirant }) {
       </HStack>
 
       <Button
-        onClick={() => setSelectedAspirant(aspirant.id)}
+        onClick={() => setSelectedAspirant(aspirant)}
         mt={19}
         rounded={12}
         colorScheme="black"

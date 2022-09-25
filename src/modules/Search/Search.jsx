@@ -12,30 +12,37 @@ import {
   Image,
   Input,
   Select,
+  Show,
   Stack,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import { Logo } from "components/Logo/Logo";
 import Router from "next/router";
 import React from "react";
 import { BsArrowLeft } from "react-icons/bs";
-import { CgOptions } from "react-icons/cg";
-import { GrFlag } from "react-icons/gr";
+import { BarLoader } from "react-spinners";
+import theme from "theme";
 import AspirantCard from "./components/AspirantCard";
 import AspirantDetails from "./components/AspirantDetails";
 import SearchFilters from "./components/SearchFilters";
-import useSearch from "./useSearch";
+import useSearchHook from "./useSearch";
 
 export default function Search() {
   const {
     query,
     setQuery,
+    debouncedOnChange,
     candidates,
-    changeFilterValue,
+    isLoading,
+    filterOptions,
+    changeFilterOptions,
+    filterList,
+    updateFilterList,
     selectedAspirant,
     setSelectedAspirant,
     backToSearchResults,
-  } = useSearch();
+  } = useSearchHook();
 
   if (selectedAspirant) {
     return (
@@ -80,15 +87,22 @@ export default function Search() {
               <Icon as={Search2Icon} boxSize={15} />
               <Input
                 value={query}
-                onChange={(event) => setQuery(event.target.value)}
+                onChange={(event) => {
+                  setQuery(event.target.value);
+                  debouncedOnChange(event.target.value);
+                }}
                 placeholder="Search for a candidate..."
                 variant="unstyled"
                 size="lg"
               />
-              <Divider orientation="vertical" maxH={38} />
-              <Select variant="unstyled" size={["sm", "sm", "lg"]} maxW={180}>
-                <option value="Political parties">Political parties</option>
-              </Select>
+              <Show ssr above="sm">
+                <Divider orientation="vertical" maxH={38} />
+              </Show>
+              <Show ssr above="sm">
+                <Select variant="unstyled" size={["sm", "sm", "lg"]} maxW={180}>
+                  <option value="Political parties">Political parties</option>
+                </Select>
+              </Show>
             </HStack>
           </Stack>
         </Stack>
@@ -112,7 +126,12 @@ export default function Search() {
             </Heading>
           )}
 
-          <SearchFilters changeFilterValue={changeFilterValue} />
+          <SearchFilters
+            filterList={filterList}
+            filterOptions={filterOptions}
+            changeFilterOptions={changeFilterOptions}
+            updateFilterList={updateFilterList}
+          />
 
           <Grid
             templateColumns={[
@@ -132,6 +151,18 @@ export default function Search() {
               />
             ))}
           </Grid>
+
+          {isLoading && (
+            <VStack spacing={3}>
+              <BarLoader
+                height={6}
+                width={250}
+                color={theme.colors.primary["500"]}
+                radius={8}
+              />
+              <Text color="gray.500">Loading candidates...</Text>
+            </VStack>
+          )}
         </Stack>
       </Stack>
     </Box>

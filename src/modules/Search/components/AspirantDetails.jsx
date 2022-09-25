@@ -31,6 +31,18 @@ export default function AspirantDetails({
     window.scrollTo(0, 0); //Always start at the top when a page changes
   }, []);
 
+  const {
+    age,
+    candidate_image,
+    gender,
+    id,
+    name,
+    party,
+    party_image,
+    qualifications,
+    position,
+  } = selectedAspirant;
+
   return (
     <Box bg="blackAlpha.100">
       <Stack direction="row" w="full" justify="center" pt={8} px="6%">
@@ -80,19 +92,19 @@ export default function AspirantDetails({
                 <Image
                   objectFit="cover"
                   maxW={[160, 250, 300, 465]}
-                  src="/images/obi.png"
+                  src={candidate_image}
                 />
                 <Image
                   maxW={[81, 140, 160, "full"]}
                   objectFit="cover"
-                  src="/images/labour-party.png"
+                  src={party_image}
                 />
               </Stack>
               <Box>
                 <Text fontWeight="bold" fontSize={[16, 20, 24]}>
-                  Labour Party Presidential Aspirant 🇳🇬
+                  {party} Aspirant 🇳🇬
                 </Text>
-                <Text>67 years old</Text>
+                {age && <Text>{age} years old</Text>}
               </Box>
             </Stack>
             <Stack fontSize={[14, 16]} spacing={[3, 6, 7]}>
@@ -103,42 +115,48 @@ export default function AspirantDetails({
                 <Text color="gray.500" w="full" maxW={[100, 140]}>
                   Name:
                 </Text>
-                <Text fontWeight="semibold">Peter Gregory Obi</Text>
+                <Text fontWeight="semibold">{name}</Text>
               </HStack>
 
               <HStack spacing={[8, 16]}>
                 <Text color="gray.500" w="full" maxW={[100, 140]}>
                   Gender:
                 </Text>
-                <Text fontWeight="semibold">Male</Text>
+                <Text fontWeight="semibold">{gender}</Text>
               </HStack>
 
-              <HStack spacing={[8, 16]}>
+              {/* <HStack spacing={[8, 16]}>
                 <Text color="gray.500" w="full" maxW={[100, 140]}>
                   Years contested:
                 </Text>
                 <Text fontWeight="semibold">2012, 2016, 2020</Text>
-              </HStack>
+              </HStack> */}
 
               <HStack spacing={[8, 16]}>
                 <Text color="gray.500" w="full" maxW={[100, 140]}>
-                  Position contested:
+                  Positions contested:
                 </Text>
-                <Text fontWeight="semibold">President</Text>
+                <Text fontWeight="semibold">
+                  {position
+                    ?.map(
+                      ({ id, position, year }) => `${position.name} (${year})`
+                    )
+                    .join(", ")}
+                </Text>
               </HStack>
 
               <HStack spacing={[8, 16]}>
                 <Text color="gray.500" w="full" maxW={[100, 140]}>
                   Party:
                 </Text>
-                <Text fontWeight="semibold">Labour Party</Text>
+                <Text fontWeight="semibold">{party}</Text>
               </HStack>
 
               <HStack spacing={[8, 16]}>
                 <Text color="gray.500" w="full" maxW={[100, 140]}>
-                  Qualification:
+                  Qualifications:
                 </Text>
-                <Text fontWeight="semibold">Masters Degree</Text>
+                <Text fontWeight="semibold">{qualifications}</Text>
               </HStack>
             </Stack>
           </Stack>

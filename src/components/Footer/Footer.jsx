@@ -39,35 +39,35 @@ export default function Footer() {
               <WrapItem minW={100}>
                 <Stack spacing={6}>
                   <Text fontWeight="bold">Search</Text>
-                  <ChakraLink color="gray.500">
-                    <Link href="#">Politicians</Link>
-                  </ChakraLink>
-                  <ChakraLink color="gray.500">
-                    <Link href="#">Parties</Link>
-                  </ChakraLink>
+                  <Link href="#" passHref>
+                    <ChakraLink color="gray.500">Politicians</ChakraLink>
+                  </Link>
+                  <Link href="#" passHref>
+                    <ChakraLink color="gray.500">Parties</ChakraLink>
+                  </Link>
                 </Stack>
               </WrapItem>
               <WrapItem minW={100}>
                 <Stack spacing={6}>
                   <Text fontWeight="bold">Navigation</Text>
-                  <ChakraLink color="gray.500">
-                    <Link href="#">Sitemap</Link>
-                  </ChakraLink>
-                  <ChakraLink color="gray.500">
-                    <Link href="#">Privacy policy</Link>
-                  </ChakraLink>
+                  <Link href="#" passHref>
+                    <ChakraLink color="gray.500">Sitemap</ChakraLink>
+                  </Link>
+                  <Link href="#" passHref>
+                    <ChakraLink color="gray.500">Privacy policy</ChakraLink>
+                  </Link>
                 </Stack>
               </WrapItem>
 
               <WrapItem minW={100}>
                 <Stack spacing={6}>
                   <Text fontWeight="bold">Learn</Text>
-                  <ChakraLink color="gray.500">
-                    <Link href="#">FAQs</Link>
-                  </ChakraLink>
-                  <ChakraLink color="gray.500">
-                    <Link href="#">Blogs</Link>
-                  </ChakraLink>
+                  <Link href="#" passHref>
+                    <ChakraLink color="gray.500">FAQs</ChakraLink>
+                  </Link>
+                  <Link href="#" passHref>
+                    <ChakraLink color="gray.500">Blogs</ChakraLink>
+                  </Link>
                 </Stack>
               </WrapItem>
 

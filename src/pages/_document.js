@@ -7,9 +7,7 @@ export default class Document extends NextDocument {
       <Html>
         <Head>
           <link rel="stylesheet" href="/styles/global.css" />
-          <link rel="stylesheet" href="/styles/nprogress.css" />
           <link rel="icon" href="/icon.png" />
-          <link rel="manifest" href="/manifest.json" />
           <link rel="apple-touch-icon" href="/icon.png"></link>
           <meta name="theme-color" content="#fff" />
           <meta name="apple-mobile-web-app-capable" content="yes" />

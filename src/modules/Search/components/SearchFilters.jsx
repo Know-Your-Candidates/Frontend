@@ -20,13 +20,104 @@ import {
   StackDivider,
   Collapse,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CgOptions } from "react-icons/cg";
-import { filterOptions } from "utils/constants";
+import { useDispatch } from "react-redux";
+import { fetchFilterOptions } from "redux/slices/candidateSlice";
 
-export default function SearchFilters({ changeFilterValue }) {
+export default function SearchFilters({
+  filterOptions,
+  changeFilterOptions,
+  filterList,
+  updateFilterList,
+}) {
+  const [selectedFilters, setSelectedFilters] = useState({});
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    changeFilterOptions({
+      senatorial_district: undefined,
+      federal_constituency: undefined,
+      state_constituency: undefined,
+      lga: undefined,
+      ward: undefined,
+      polling_unit: undefined,
+    });
+    if (!selectedFilters.state) return;
+    const fetchStateFilterDependants = async () => {
+      const stateDependants = await Promise.all(
+        [
+          "senatorial_district",
+          "federal_constituency",
+          "state_constituency",
+          "lga",
+        ].map((key) => {
+          return dispatch(
+            fetchFilterOptions({ state: selectedFilters.state, filter: key })
+          ).unwrap();
+        })
+      );
+
+      changeFilterOptions(Object.assign({}, ...stateDependants));
+    };
+    fetchStateFilterDependants();
+  }, [selectedFilters.state]);
+
+  useEffect(() => {
+    changeFilterOptions({ ward: undefined, polling_unit: undefined });
+    if (!selectedFilters.lga) return;
+    const fetchWards = async () => {
+      const wards = await dispatch(
+        fetchFilterOptions({ lga: selectedFilters.lga, filter: "ward" })
+      ).unwrap();
+
+      changeFilterOptions(wards);
+    };
+    fetchWards();
+  }, [selectedFilters.lga]);
+
+  useEffect(() => {
+    changeFilterOptions({ polling_unit: undefined });
+    if (!selectedFilters.ward) return;
+    const fetchUnits = async () => {
+      const units = await dispatch(
+        fetchFilterOptions({
+          ward: selectedFilters.ward,
+          filter: "polling_unit",
+        })
+      ).unwrap();
+      changeFilterOptions(units);
+    };
+    fetchUnits();
+  }, [selectedFilters.ward]);
+
+  const changeFilterValue = (updates) => {
+    if (Object.keys(updates)[0] === "age_bracket") {
+      updates["min_age"] = updates.age_bracket?.split(" - ")?.[0];
+      updates["max_age"] = updates.age_bracket?.split(" - ")?.[1];
+    }
+
+    setSelectedFilters((prev) => ({ ...prev, ...updates }));
+  };
+
   const modalDisclosure = useDisclosure();
   const collapsibleDisclosure = useDisclosure();
+
+  const confirmFilters = () => {
+    updateFilterList(selectedFilters);
+
+    modalDisclosure.onClose();
+    collapsibleDisclosure.onClose();
+  };
+
+  const resetFilters = () => {
+    updateFilterList({});
+    setSelectedFilters({});
+    modalDisclosure.onClose();
+    collapsibleDisclosure.onClose();
+  };
+
+  const noAppliedFilters = !Object.values(filterList).filter(Boolean).length;
 
   return (
     <Stack spacing={4} w="full">
@@ -35,7 +126,7 @@ export default function SearchFilters({ changeFilterValue }) {
           <Show ssr above="lg">
             <Button
               onClick={collapsibleDisclosure.onToggle}
-              variant="outline"
+              variant={noAppliedFilters ? "outline" : "solid"}
               rightIcon={<CgOptions />}
             >
               Use Filters
@@ -45,7 +136,7 @@ export default function SearchFilters({ changeFilterValue }) {
           <Show ssr below="lg">
             <Button
               onClick={modalDisclosure.onOpen}
-              variant="outline"
+              variant={noAppliedFilters ? "outline" : "solid"}
               rightIcon={<CgOptions />}
             >
               Use Filters
@@ -53,7 +144,9 @@ export default function SearchFilters({ changeFilterValue }) {
           </Show>
 
           <Show ssr above="lg">
-            <Button variant="outline">Reset Filters</Button>
+            <Button onClick={resetFilters} variant="outline">
+              Reset Filters
+            </Button>
           </Show>
         </HStack>
         {collapsibleDisclosure.isOpen && (
@@ -77,11 +170,16 @@ export default function SearchFilters({ changeFilterValue }) {
               <Text>Filters</Text>
 
               <HStack spacing={6} pr={8}>
-                <Button size="sm" colorScheme="primary" variant="link">
+                <Button
+                  onClick={confirmFilters}
+                  size="sm"
+                  colorScheme="primary"
+                  variant="link"
+                >
                   Apply Filters
                 </Button>
 
-                <Button size="sm" variant="link">
+                <Button onClick={resetFilters} size="sm" variant="link">
                   Reset
                 </Button>
               </HStack>
@@ -89,8 +187,25 @@ export default function SearchFilters({ changeFilterValue }) {
           </DrawerHeader>
           <DrawerBody px={4}>
             <Stack divider={<StackDivider />} spacing={0}>
-              {filterOptions.map(({ name, options }) => (
-                <Select h={51} variant="flushed" placeholder={name}></Select>
+              {Object.keys(filterOptions).map((filterKey) => (
+                <Select
+                  key={filterKey}
+                  h={51}
+                  variant="flushed"
+                  placeholder={filterKey.split("_").join(" ").toUpperCase()}
+                  value={selectedFilters[filterKey] || ""}
+                  onChange={(event) =>
+                    changeFilterValue({
+                      [filterKey]: event.target.value || undefined,
+                    })
+                  }
+                >
+                  {filterOptions[filterKey]?.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </Select>
               ))}
             </Stack>
           </DrawerBody>
@@ -100,24 +215,41 @@ export default function SearchFilters({ changeFilterValue }) {
       <Collapse in={collapsibleDisclosure.isOpen} animateOpacity>
         <HStack bg="gray.50" p={6} rounded={8}>
           <Wrap spacingX={8} spacingY={5}>
-            {filterOptions.map(({ name, options }) => (
-              <WrapItem>
+            {Object.keys(filterOptions).map((filterKey) => (
+              <WrapItem key={filterKey}>
                 <Stack>
-                  <Text fontWeight={500} as="label">
-                    {name}
+                  <Text textTransform="capitalize" fontWeight={500} as="label">
+                    {filterKey.split("_").join(" ")}
                   </Text>
                   <Select
                     variant="outline"
                     placeholder="Select"
                     size="lg"
                     w="full"
+                    value={selectedFilters[filterKey] || ""}
+                    onChange={(event) =>
+                      changeFilterValue({
+                        [filterKey]: event.target.value || undefined,
+                      })
+                    }
                     minW={173}
-                  ></Select>
+                  >
+                    {filterOptions[filterKey]?.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </Select>
                 </Stack>
               </WrapItem>
             ))}
             <WrapItem alignItems="flex-end">
-              <Button minW={173} colorScheme="primary" size="lg">
+              <Button
+                onClick={confirmFilters}
+                minW={173}
+                colorScheme="primary"
+                size="lg"
+              >
                 Apply
               </Button>
             </WrapItem>

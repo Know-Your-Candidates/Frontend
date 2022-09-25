@@ -10,9 +10,6 @@ export const fetchCandidates = createAsyncThunk(
         data: { data },
       } = await Axios.get(`${BASE_API_URL}/candidates/without-location/`, {
         params: fetchPayload,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("kyc_acccess_token")}`,
-        },
       });
       return data;
     } catch ({ response }) {
@@ -30,11 +27,25 @@ export const searchCandidates = createAsyncThunk(
         data: { data },
       } = await Axios.get(`${BASE_API_URL}/candidates/`, {
         params: searchPayload,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("kyc_acccess_token")}`,
-        },
       });
       return data;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue(response);
+    }
+  }
+);
+
+export const fetchFilterOptions = createAsyncThunk(
+  "candidates/fetchFilterOptions",
+  async (fetchPayload, thunkAPI) => {
+    try {
+      const {
+        data: { data },
+      } = await Axios.get(`${BASE_API_URL}/candidates/get-filter-data`, {
+        params: fetchPayload,
+      });
+      return { [fetchPayload.filter]: data };
     } catch ({ response }) {
       console.log(response);
       return thunkAPI.rejectWithValue(response);
