@@ -22,12 +22,33 @@ import {
   Td,
   TableContainer,
   Icon,
+  VStack,
 } from "@chakra-ui/react";
+import check from "check-types";
 import AdminLayout from "components/AdminLayout/AdminLayout";
 import React from "react";
 import { IoEyeOutline, IoOptionsOutline } from "react-icons/io5";
+import { BarLoader } from "react-spinners";
+import theme from "theme";
+import useDataAnalyticsHook from "./useDataAnalyticsHook";
 
 export default function DataAnalytics() {
+  const { analytics, range, setRange } = useDataAnalyticsHook();
+
+  if (!analytics) {
+    return (
+      <VStack spacing={3}>
+        <BarLoader
+          height={6}
+          width={250}
+          color={theme.colors.primary["500"]}
+          radius={8}
+        />
+        <Text color="gray.500">Loading analytics...</Text>
+      </VStack>
+    );
+  }
+
   return (
     <AdminLayout>
       <Box pt={[8, 8, 16]} pl={["6%", "6%", 16]} pr={["6%", "6%", 12]}>
@@ -36,12 +57,17 @@ export default function DataAnalytics() {
         <Divider mt={4} mb={12} />
 
         <HStack mb={4} justify="flex-end">
-          <Select w="fit-content" bg="white">
-            <option value="Per day">Per day</option>
-            <option value="Per week">Per week</option>
-            <option value="Per month">Per month</option>
-            <option value="Per year">Per year</option>
-            <option value="Lifetime">Lifetime</option>
+          <Select
+            value={range}
+            onChange={(event) => setRange(event.target.value)}
+            w="fit-content"
+            bg="white"
+          >
+            <option value="day">Per day</option>
+            <option value="week">Per week</option>
+            <option value="month">Per month</option>
+            <option value="year">Per year</option>
+            <option value="lifetime">Lifetime</option>
           </Select>
         </HStack>
 

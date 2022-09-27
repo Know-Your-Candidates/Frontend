@@ -47,7 +47,7 @@ export default function LandingPage() {
         <Stack spacing={94} w="full" maxW="6xl">
           <HStack w="full" h="fit-content" justify="space-between">
             <Logo w={["100px", "100px", "140px"]} />
-            <HStack spacing={12}>
+            <HStack spacing={[6, 6, 12]}>
               <Link href="/">
                 <ChakraLink color="primary.500" fontWeight={500}>
                   Home

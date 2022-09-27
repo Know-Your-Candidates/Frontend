@@ -95,14 +95,14 @@ export default function Search() {
                 variant="unstyled"
                 size="lg"
               />
-              <Show ssr above="sm">
+              {/* <Show ssr above="sm">
                 <Divider orientation="vertical" maxH={38} />
               </Show>
               <Show ssr above="sm">
                 <Select variant="unstyled" size={["sm", "sm", "lg"]} maxW={180}>
                   <option value="Political parties">Political parties</option>
                 </Select>
-              </Show>
+              </Show> */}
             </HStack>
           </Stack>
         </Stack>

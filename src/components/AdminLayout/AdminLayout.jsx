@@ -25,9 +25,11 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BiLogOut } from "react-icons/bi";
 import { TiUserOutline } from "react-icons/ti";
+import { useSelector } from "react-redux";
 
 export default function AdminLayout({ children }) {
   const router = useRouter();
+  const { userDetails } = useSelector((state) => state.user);
 
   return (
     <Box>
@@ -113,7 +115,11 @@ export default function AdminLayout({ children }) {
               <Menu placement="bottom-end">
                 <MenuButton textAlign="left">
                   <HStack>
-                    <Avatar name="AK" width={8} height={8} />
+                    <Avatar
+                      name={`${userDetails?.first_name}`}
+                      width={8}
+                      height={8}
+                    />
                   </HStack>
                 </MenuButton>
                 <MenuList px={1} py={2} color="blue.800">
