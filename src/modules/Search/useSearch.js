@@ -51,7 +51,10 @@ export default function useSearchHook() {
   }, []);
 
   useEffect(() => {
-    if (urlQuery.query) setQuery(urlQuery.query);
+    if (urlQuery.query) {
+      setQuery(urlQuery.query);
+      // debouncedOnChange(urlQuery.query);
+    }
   }, [urlQuery]);
 
   useEffect(() => {

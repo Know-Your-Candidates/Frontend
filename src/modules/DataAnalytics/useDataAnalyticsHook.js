@@ -6,13 +6,13 @@ export default function useDataAnalyticsHook() {
   const dispatch = useDispatch();
   const { analytics, error } = useSelector((state) => state.analytics);
 
-  const [range, setRange] = useState(null);
+  const [period, setPeriod] = useState("day");
 
   useEffect(() => {
-    dispatch(fetchAnalytics());
-  }, []);
+    dispatch(fetchAnalytics({ period }));
+  }, [period]);
 
   console.log(analytics);
 
-  return { analytics, range, setRange };
+  return { analytics, period, setPeriod };
 }
