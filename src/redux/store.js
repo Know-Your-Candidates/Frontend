@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userReducer from "./slices/userSlice";
 import candidateReducer from "./slices/candidateSlice";
 import analyticsReducer from "./slices/analyticsSlice";
+import adminReducer from "./slices/adminSlice";
 
 //Import individual slices and configure store
 
@@ -9,6 +10,7 @@ const combinedReducer = combineReducers({
   user: userReducer,
   candidates: candidateReducer,
   analytics: analyticsReducer,
+  admins: adminReducer,
 });
 
 const rootReducer = (state, action) => {

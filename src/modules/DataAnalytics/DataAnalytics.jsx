@@ -40,7 +40,7 @@ export default function DataAnalytics() {
   return (
     <AdminLayout>
       <Box pt={[8, 8, 16]} pl={["6%", "6%", 16]} pr={["6%", "6%", 12]}>
-        <Heading fontSize={32}>Data Analytics</Heading>
+        <Heading fontSize={[28, 32]}>Data Analytics</Heading>
 
         <Divider mt={4} mb={12} />
 

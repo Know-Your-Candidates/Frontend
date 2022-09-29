@@ -29,6 +29,14 @@ import check from "check-types";
 import { IoEyeOutline, IoOptionsOutline } from "react-icons/io5";
 
 export default function KeywordFilterTable({ analytics }) {
+  const highestFilterScore = Math.max(
+    ...Object.values(analytics.filters).map(Number)
+  );
+
+  const highestKeywordScore = Math.max(
+    ...Object.values(analytics.keywords).map(Number)
+  );
+
   return (
     <Tabs my={12} variant="enclosed">
       <TabList>
@@ -65,7 +73,11 @@ export default function KeywordFilterTable({ analytics }) {
                     <Td>{analytics.keywords[keyword]}</Td>
                     <Td w="full">
                       <Box
-                        w="full"
+                        w={`${
+                          (Number(analytics.keywords[keyword]) /
+                            highestKeywordScore) *
+                          100
+                        }%`}
                         h={2}
                         rounded="full"
                         bg="green.300"
@@ -99,7 +111,11 @@ export default function KeywordFilterTable({ analytics }) {
                     <Td>{filter}</Td>
                     <Td w="full">
                       <Box
-                        w="full"
+                        w={`${
+                          (Number(analytics.filters[filter]) /
+                            highestFilterScore) *
+                          100
+                        }%`}
                         h={2}
                         rounded="full"
                         bg="green.300"

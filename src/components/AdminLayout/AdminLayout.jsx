@@ -15,6 +15,7 @@ import {
   Show,
   Stack,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { Logo } from "components/Logo/Logo";
 import Link from "next/link";
@@ -26,9 +27,11 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { BiLogOut } from "react-icons/bi";
 import { TiUserOutline } from "react-icons/ti";
 import { useSelector } from "react-redux";
+import MenuDrawer from "./MenuDrawer";
 
 export default function AdminLayout({ children }) {
   const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { userDetails } = useSelector((state) => state.user);
 
   return (
@@ -81,11 +84,13 @@ export default function AdminLayout({ children }) {
               <Show below="lg">
                 <HStack>
                   <IconButton
+                    onClick={onOpen}
                     variant="ghost"
                     color="gray.600"
                     fontSize={22}
                     icon={<GiHamburgerMenu />}
                   />
+                  <MenuDrawer isOpen={isOpen} onClose={onClose} />
                   <Logo maxW={90} />
                 </HStack>
               </Show>

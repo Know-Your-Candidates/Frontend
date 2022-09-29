@@ -12,7 +12,5 @@ export default function useDataAnalyticsHook() {
     dispatch(fetchAnalytics({ period }));
   }, [period]);
 
-  console.log(analytics);
-
   return { analytics, period, setPeriod };
 }
