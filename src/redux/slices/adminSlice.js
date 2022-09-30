@@ -26,17 +26,13 @@ export const createAdmin = createAsyncThunk(
   "admins/createAdmin",
   async (createPayload, thunkAPI) => {
     try {
-      const { data } = await Axios.post(
-        `${BASE_API_URL}/billing/admin/new`,
-        createPayload,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "kyc_acccess_token"
-            )}`,
-          },
-        }
-      );
+      const {
+        data: { data },
+      } = await Axios.post(`${BASE_API_URL}/users/register/`, createPayload, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("kyc_acccess_token")}`,
+        },
+      });
       return data;
     } catch ({ response }) {
       console.log(response);
@@ -47,21 +43,15 @@ export const createAdmin = createAsyncThunk(
 
 export const editAdmin = createAsyncThunk(
   "admins/editAdmin",
-  async (editPayload, thunkAPI) => {
+  async ({ id, payload }, thunkAPI) => {
     try {
       const {
         data: { data },
-      } = await Axios.put(
-        `${BASE_API_URL}/church/admins/${editPayload.id}/`,
-        editPayload,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem(
-              "kyc_acccess_token"
-            )}`,
-          },
-        }
-      );
+      } = await Axios.put(`${BASE_API_URL}/users/user/${id}/`, payload, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("kyc_acccess_token")}`,
+        },
+      });
       return data;
     } catch ({ response }) {
       console.log(response);
@@ -76,7 +66,7 @@ export const deleteAdmin = createAsyncThunk(
     try {
       const {
         data: { data },
-      } = await Axios.delete(`${BASE_API_URL}/church/admins/${adminId}/`, {
+      } = await Axios.delete(`${BASE_API_URL}/users/user/${adminId}/`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("kyc_acccess_token")}`,
         },
@@ -131,7 +121,7 @@ const adminSlice = createSlice({
     },
     [createAdmin.fulfilled]: (state, action) => {
       state.success = "CREATE_ADMIN";
-      state.admins.push(action.payload);
+      state.admins.results.push(action.payload);
       delete state.loading;
       delete state.error;
     },
@@ -149,7 +139,7 @@ const adminSlice = createSlice({
     },
     [editAdmin.fulfilled]: (state, action) => {
       state.success = "EDIT_ADMIN";
-      const admin = state.admins.find(
+      const admin = state.admins.results.find(
         (admin) => admin.id === action.payload.id
       );
       // delete state.tempNote;
@@ -169,15 +159,15 @@ const adminSlice = createSlice({
       delete state.error;
       delete state.success;
       state.loading = "DELETE_ADMIN";
-      const position = state.admins.findIndex(
+      const position = state.admins.results.findIndex(
         (admin) => admin.id === action.meta.arg
       );
-      state.backupAdmin = Object.assign({}, state.admins[position]);
+      state.backupAdmin = Object.assign({}, state.admins.results[position]);
       state.backupPosition = position;
     },
     [deleteAdmin.fulfilled]: (state) => {
       state.success = "DELETE_ADMIN";
-      state.admins.splice(state.backupPosition, 1);
+      state.admins.results.splice(state.backupPosition, 1);
       delete state.backupAdmin;
       delete state.backupPosition;
       delete state.loading;

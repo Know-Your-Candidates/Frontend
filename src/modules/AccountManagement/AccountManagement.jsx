@@ -56,6 +56,7 @@ import DeleteAdmin from "./components/DeleteAdmin";
 import Filters from "./components/Filters";
 import { BarLoader } from "react-spinners";
 import theme from "theme";
+import EditAdmin from "./components/EditAdmin";
 
 export default function AccountManagement() {
   const data = useAccountManagementHook();
@@ -74,7 +75,16 @@ export default function AccountManagement() {
         </Heading>
 
         {data.view === "grid" && (
-          <Grid templateColumns="repeat(4, 1fr)" gap={6}>
+          <Grid
+            templateColumns={[
+              "repeat(1, 1fr)",
+              "repeat(2, 1fr)",
+              "repeat(2, 1fr)",
+              "repeat(3, 1fr)",
+              "repeat(4, 1fr)",
+            ]}
+            gap={6}
+          >
             {data.admins.results.map((admin) => (
               <GridItem
                 key={admin.id}
@@ -86,14 +96,9 @@ export default function AccountManagement() {
                 py={6}
               >
                 <VStack>
-                  <Avatar
-                    size="lg"
-                    name={`${admin.first_name} ${admin.last_name}`}
-                  />
+                  <Avatar size="lg" name={admin.name} />
                   <VStack spacing={0}>
-                    <Text fontWeight={700}>
-                      {admin.first_name} {admin.last_name}
-                    </Text>
+                    <Text fontWeight={700}>{admin.name}</Text>
                     <Text fontSize="xs" color="gray.400">
                       {admin.email}
                     </Text>
@@ -110,7 +115,18 @@ export default function AccountManagement() {
                     >
                       Delete
                     </Button>
-                    <Button w="full" size="lg">
+                    <Button
+                      onClick={() =>
+                        data.setAdminToEdit({
+                          ...admin,
+                          account_type: admin.is_superuser
+                            ? "superuser"
+                            : "admin",
+                        })
+                      }
+                      w="full"
+                      size="lg"
+                    >
                       Edit
                     </Button>
                   </HStack>
@@ -147,9 +163,7 @@ export default function AccountManagement() {
               <Tbody>
                 {data.admins.results.map((admin) => (
                   <Tr opacity={1} key={admin.id}>
-                    <Td>
-                      {admin.first_name} {admin.last_name}
-                    </Td>
+                    <Td>{admin.name}</Td>
                     <Td>{admin.is_superuser ? "Super" : ""} Admin</Td>
                     <Td>
                       {admin.verified && admin.is_active ? (
@@ -186,6 +200,14 @@ export default function AccountManagement() {
                         <IconButton
                           colorScheme="blue"
                           variant="ghost"
+                          onClick={() =>
+                            data.setAdminToEdit({
+                              ...admin,
+                              account_type: admin.is_superuser
+                                ? "superuser"
+                                : "admin",
+                            })
+                          }
                           icon={<EditIcon />}
                         />
                         <IconButton
@@ -220,8 +242,17 @@ export default function AccountManagement() {
         )}
 
         <DeleteAdmin
+          admin={data.adminToDelete}
           isOpen={!!data.adminToDelete}
           onClose={() => data.setAdminToDelete(null)}
+          handleConfirmDelete={data.handleConfirmDelete}
+          isDeleting={data.isDeletingAdmin}
+        />
+
+        <EditAdmin
+          data={data}
+          isOpen={!!data.adminToEdit}
+          onClose={() => data.setAdminToEdit(null)}
         />
       </Box>
     </AdminLayout>

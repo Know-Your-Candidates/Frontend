@@ -38,20 +38,22 @@ export default function Filters({ data }) {
 
   return (
     <Stack
-      direction="row"
-      align="center"
+      direction={["column", "column", "row"]}
+      align={["flex-start", "flex-start", "center"]}
       justify="space-between"
       bg="white"
+      spacing={6}
       border="1px solid"
       borderColor="blackAlpha.100"
       py={2.5}
       px={4}
     >
       <Stack
-        spacing={5}
-        direction="row"
+        direction={["column", "column", "row"]}
+        spacing={[3, 3, 5]}
+        w="full"
         divider={<StackDivider />}
-        align="center"
+        align={["flex-start", "flex-start", "center"]}
       >
         <HStack>
           <IconButton
@@ -68,8 +70,6 @@ export default function Filters({ data }) {
             fontSize="2xl"
             variant="ghost"
           />
-        </HStack>
-        <HStack spacing={4}>
           <Menu>
             <MenuButton as={HStack}>
               <ButtonGroup
@@ -87,7 +87,7 @@ export default function Filters({ data }) {
                 />
               </ButtonGroup>
             </MenuButton>
-            <MenuList px={4}>
+            <MenuList pb={4} px={4}>
               <MenuGroup title="Status">
                 <CheckboxGroup colorScheme="primary" size="sm">
                   <Stack>
@@ -119,7 +119,7 @@ export default function Filters({ data }) {
                 </Stack>
               </MenuGroup>
 
-              <HStack spacing={7} pt={6}>
+              {/* <HStack spacing={7} pt={6}>
                 <MenuItem as={Button} w={20} size="sm" variant="outline">
                   Clear
                 </MenuItem>
@@ -133,9 +133,11 @@ export default function Filters({ data }) {
                 >
                   Filter
                 </MenuItem>
-              </HStack>
+              </HStack> */}
             </MenuList>
           </Menu>
+        </HStack>
+        <Stack spacing={4}>
           <InputGroup>
             <InputLeftElement
               pointerEvents="none"
@@ -151,9 +153,9 @@ export default function Filters({ data }) {
               placeholder="Search"
             />
           </InputGroup>
-        </HStack>
+        </Stack>
       </Stack>
-      <AddAdmin />
+      <AddAdmin data={data} />
     </Stack>
   );
 }

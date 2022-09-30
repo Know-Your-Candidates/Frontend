@@ -9,14 +9,14 @@ export const separateWithComma = (number) => {
 };
 
 const getErrorMessage = (error) => {
-  if (error.status == 422) {
-    const errorKey = Object.keys(error?.data?.errors)?.[0];
-    const errorMessage = error?.data?.errors?.[errorKey]?.[0];
+  if (error.status == 400) {
+    const errorKey = Object.keys(error?.data?.error)?.[0];
+    const errorMessage = error?.data?.error?.[errorKey];
 
     return `${errorKey}: ${errorMessage}`;
   } else if (error.status == 401) {
     return error?.data?.error?.detail;
-  } else if (error.status == 400 || error.status == 403) {
+  } else if (error.status == 403) {
     return error?.data?.message;
   } else {
     return error?.data?.message || "Please try again later";

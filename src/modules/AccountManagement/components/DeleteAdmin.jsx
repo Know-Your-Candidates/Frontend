@@ -14,16 +14,22 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-export default function DeleteAdmin({ isOpen, onClose }) {
+export default function DeleteAdmin({
+  admin,
+  isOpen,
+  onClose,
+  handleConfirmDelete,
+  isDeleting,
+}) {
   return (
     <Modal size="sm" isCentered isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent rounded={24}>
-        <ModalHeader textAlign="center">Delete confirmation</ModalHeader>
+        <ModalHeader textAlign="center">Delete {admin?.name}?</ModalHeader>
         <ModalCloseButton />
         <ModalBody py={8}>
           <VStack spacing={8}>
-            <Avatar name="Dan Abrahmov" size="xl" />
+            <Avatar name={admin?.name} size="xl" />
             <Text color="gray.500" textAlign="center">
               Deleting this admin user means they willl no longer be able to
               view their Dashboard. Are you sure you want to continue?
@@ -33,10 +39,16 @@ export default function DeleteAdmin({ isOpen, onClose }) {
 
         <ModalFooter>
           <HStack w="full" justify="space-between">
-            <Button variant="ghost" onClick={onClose}>
+            <Button variant="ghost" isDisabled={isDeleting} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="red" size="lg">
+            <Button
+              isLoading={isDeleting}
+              loadingText="Deleting..."
+              onClick={handleConfirmDelete}
+              colorScheme="red"
+              size="lg"
+            >
               Confirm delete
             </Button>
           </HStack>

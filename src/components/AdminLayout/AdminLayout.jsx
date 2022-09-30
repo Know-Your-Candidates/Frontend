@@ -101,7 +101,7 @@ export default function AdminLayout({ children }) {
                 w={9}
                 h={9}
                 cursor="pointer"
-                bg="gray.100"
+                bg="gray.50"
                 rounded={8}
                 icon={<IoMdNotificationsOutline fontSize={20} />}
               >
@@ -121,7 +121,7 @@ export default function AdminLayout({ children }) {
                 <MenuButton textAlign="left">
                   <HStack>
                     <Avatar
-                      name={`${userDetails?.first_name}`}
+                      name={userDetails?.name?.split(" ")?.[0]}
                       width={8}
                       height={8}
                     />
