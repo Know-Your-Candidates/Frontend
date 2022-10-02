@@ -20,7 +20,9 @@ import {
 import { Logo } from "components/Logo/Logo";
 import Router from "next/router";
 import React from "react";
+import { useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
+import ReactPaginate from "react-paginate";
 import { BarLoader } from "react-spinners";
 import theme from "theme";
 import AspirantCard from "./components/AspirantCard";
@@ -42,6 +44,9 @@ export default function Search() {
     selectedAspirant,
     setSelectedAspirant,
     backToSearchResults,
+    page,
+    setPage,
+    handlePageClick,
   } = useSearchHook();
 
   if (selectedAspirant) {
@@ -162,6 +167,25 @@ export default function Search() {
               />
               <Text color="gray.500">Loading candidates...</Text>
             </VStack>
+          )}
+          <br />
+
+          {!isLoading && (
+            <ReactPaginate
+              previousLabel="<"
+              nextLabel=">"
+              breakLabel="..."
+              breakClassName="break"
+              initialPage={page}
+              forcePage={page}
+              pageCount={Math.ceil(candidates.count / 25)}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={3}
+              disableInitialCallback
+              onPageChange={handlePageClick}
+              containerClassName="pagination"
+              activeClassName="active"
+            />
           )}
         </Stack>
       </Stack>

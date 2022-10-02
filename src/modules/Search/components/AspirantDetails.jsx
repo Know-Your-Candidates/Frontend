@@ -90,12 +90,17 @@ export default function AspirantDetails({
             <Stack spacing={2}>
               <Stack align="flex-end" direction="row" spacing={3}>
                 <Image
+                  objectPosition="center"
                   objectFit="cover"
-                  maxW={[160, 250, 300, 465]}
+                  maxW={[210, 400, 450, 465]}
+                  h={[130, 250, 300]}
+                  rounded={12}
                   src={candidate_image}
                 />
                 <Image
-                  maxW={[81, 140, 160, "full"]}
+                  maxW={[81, 160, 260, "full"]}
+                  h={["auto", "auto", "auto", "full"]}
+                  rounded={12}
                   objectFit="cover"
                   src={party_image}
                 />
@@ -107,33 +112,33 @@ export default function AspirantDetails({
                 {age && <Text>{age} years old</Text>}
               </Box>
             </Stack>
-            <Stack fontSize={[14, 16]} spacing={[3, 6, 7]}>
+            <Stack fontSize={[14, 16]} spacing={[3, 6, 4]}>
               <Text fontSize={18} fontWeight="bold">
                 Other information
               </Text>
               <HStack spacing={[8, 16]}>
-                <Text color="gray.500" w="full" maxW={[100, 140]}>
+                <Text color="gray.500" w="full" maxW={[100, 160]}>
                   Name:
                 </Text>
                 <Text fontWeight="semibold">{name}</Text>
               </HStack>
 
               <HStack spacing={[8, 16]}>
-                <Text color="gray.500" w="full" maxW={[100, 140]}>
+                <Text color="gray.500" w="full" maxW={[100, 160]}>
                   Gender:
                 </Text>
                 <Text fontWeight="semibold">{gender}</Text>
               </HStack>
 
               {/* <HStack spacing={[8, 16]}>
-                <Text color="gray.500" w="full" maxW={[100, 140]}>
+                <Text color="gray.500" w="full" maxW={[100, 160]}>
                   Years contested:
                 </Text>
                 <Text fontWeight="semibold">2012, 2016, 2020</Text>
               </HStack> */}
 
               <HStack spacing={[8, 16]}>
-                <Text color="gray.500" w="full" maxW={[100, 140]}>
+                <Text color="gray.500" w="full" maxW={[100, 160]}>
                   Positions contested:
                 </Text>
                 <Text fontWeight="semibold">
@@ -146,14 +151,14 @@ export default function AspirantDetails({
               </HStack>
 
               <HStack spacing={[8, 16]}>
-                <Text color="gray.500" w="full" maxW={[100, 140]}>
+                <Text color="gray.500" w="full" maxW={[100, 160]}>
                   Party:
                 </Text>
                 <Text fontWeight="semibold">{party}</Text>
               </HStack>
 
               <HStack spacing={[8, 16]}>
-                <Text color="gray.500" w="full" maxW={[100, 140]}>
+                <Text color="gray.500" w="full" maxW={[100, 160]}>
                   Qualifications:
                 </Text>
                 <Text fontWeight="semibold">{qualifications}</Text>

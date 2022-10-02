@@ -27,21 +27,33 @@ export default function AspirantCard({ aspirant, setSelectedAspirant }) {
       <Stack
         align="flex-end"
         rounded={8}
+        bgSize="cover"
+        bgPos="center"
+        bgRepeat="no-repeat"
         bgImage={aspirant.candidate_image}
         w="full"
+        p={3}
         h={237}
       >
-        <Image boxSize={70} rounded={8} src={aspirant.candidate_image} />
+        <Image
+          shadow="lg"
+          objectFit="cover"
+          boxSize={70}
+          rounded={8}
+          src={aspirant.party_image}
+        />
       </Stack>
-      <HStack justify="space-between">
-        <Text textTransform="capitalize">{aspirant.name}</Text>
+      <HStack pt={3} justify="space-between">
+        <Text fontWeight="bold" textTransform="capitalize">
+          {aspirant.name}
+        </Text>
 
         <HStack>
           <Icon as={GrFlag} />
           <Text>{aspirant.party}</Text>
         </HStack>
       </HStack>
-      <HStack mt={18} justify="space-between">
+      <HStack mt={2} justify="space-between">
         <Text>{aspirant.gender}</Text>
       </HStack>
 

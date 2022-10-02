@@ -24,6 +24,7 @@ const filters = {
 };
 
 export default function useSearchHook() {
+  const [page, setPage] = useState(0);
   const { candidates, loading } = useSelector((state) => state.candidates);
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
@@ -65,20 +66,25 @@ export default function useSearchHook() {
         ...filterList,
       })
     );
+    setPage(0);
   }, [filterList]);
 
   const debouncedOnChange = useCallback(
-    debounce((value) => {
-      dispatch(
+    debounce(async (value) => {
+      await dispatch(
         fetchCandidates({
           page: 1,
           name: value || undefined,
           ...filterList,
         })
-      );
+      ).unwrap();
+
+      setPage(0);
     }, 300),
     []
   );
+
+  console.log(page);
 
   const changeFilterOptions = (updates) => {
     setFilterOptions((prev) => ({ ...prev, ...updates }));
@@ -90,6 +96,17 @@ export default function useSearchHook() {
 
   const backToSearchResults = () => {
     setSelectedAspirant(null);
+  };
+
+  const handlePageClick = async ({ selected }) => {
+    await dispatch(
+      fetchCandidates({
+        page: selected + 1,
+        name: query || undefined,
+        ...filterList,
+      })
+    ).unwrap();
+    setPage(selected);
   };
 
   return {
@@ -105,5 +122,8 @@ export default function useSearchHook() {
     selectedAspirant,
     setSelectedAspirant,
     backToSearchResults,
+    page,
+    setPage,
+    handlePageClick,
   };
 }

@@ -63,3 +63,56 @@ body {
 .container-body::-webkit-scrollbar-thumb:hover {
   background: #a0aec0;
 }
+
+.pagination {
+  display: inline-block;
+  padding-left: 15px;
+  padding-right: 15px;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.pagination .previous,
+.pagination .next {
+  border: 1px solid lightgray;
+  border-radius: 8px;
+}
+
+.pagination li {
+  display: inline-block;
+  border-radius: 8px;
+  margin: 0 4px;
+}
+
+.pagination li.disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+.pagination li.disabled a {
+  cursor: not-allowed;
+}
+
+.pagination li a {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s all;
+}
+
+.pagination li a:hover {
+  background-color: lightgray;
+  border-radius: 8px;
+}
+
+.pagination li.active {
+  background-color: #008751;
+  color: white;
+}
+
+.pagination li.active a:hover {
+  background-color: #008751;
+}

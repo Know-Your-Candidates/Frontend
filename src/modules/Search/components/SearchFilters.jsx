@@ -158,7 +158,7 @@ export default function SearchFilters({
 
       <Drawer
         placement="bottom"
-        size="full"
+        size="xl"
         onClose={modalDisclosure.onClose}
         isOpen={modalDisclosure.isOpen}
       >
@@ -185,7 +185,7 @@ export default function SearchFilters({
               </HStack>
             </HStack>
           </DrawerHeader>
-          <DrawerBody px={4}>
+          <DrawerBody overflowY="auto" overflowX="hidden" px={4}>
             <Stack divider={<StackDivider />} spacing={0}>
               {Object.keys(filterOptions).map((filterKey) => (
                 <Select

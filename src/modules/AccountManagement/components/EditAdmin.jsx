@@ -79,7 +79,7 @@ export default function EditAdmin({ data, isOpen, onClose }) {
               />
             </Stack>
 
-            <Stack>
+            {/* <Stack>
               <Text as="label">Admin password</Text>
               <Input
                 name="password"
@@ -90,7 +90,7 @@ export default function EditAdmin({ data, isOpen, onClose }) {
                 placeholder="Enter Admin password"
                 size="lg"
               />
-            </Stack>
+            </Stack> */}
           </Stack>
         </ModalBody>
 
