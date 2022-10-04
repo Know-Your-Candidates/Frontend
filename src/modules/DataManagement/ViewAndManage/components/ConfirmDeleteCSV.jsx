@@ -14,8 +14,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-export default function DeleteAdmin({
-  admin,
+export default function ConfirmDeleteCSV({
+  csv,
   isOpen,
   onClose,
   handleConfirmDelete,
@@ -24,15 +24,14 @@ export default function DeleteAdmin({
   return (
     <Modal size="sm" isCentered isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent rounded={24}>
-        <ModalHeader textAlign="center">Delete {admin?.name}?</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody py={8}>
-          <VStack spacing={8}>
-            <Avatar name={admin?.name} size="xl" />
+      <ModalContent rounded={20}>
+        <ModalHeader textAlign="center">Delete this CSV data?</ModalHeader>
+        <ModalCloseButton isDisabled={isDeleting} />
+        <ModalBody>
+          <VStack>
             <Text color="gray.500" textAlign="center">
-              Deleting this admin user means they will no longer be able to view
-              their Dashboard. Are you sure you want to continue?
+              Deleting this CSV will remove all data that has been uploaded to
+              the database from this CSV. Are you sure you want to continue?
             </Text>
           </VStack>
         </ModalBody>

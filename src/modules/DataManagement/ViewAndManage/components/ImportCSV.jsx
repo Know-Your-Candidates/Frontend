@@ -9,16 +9,28 @@ import {
   Input,
   Select,
   Stack,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
   Text,
 } from "@chakra-ui/react";
 import { MdOutlineCloudUpload } from "react-icons/md";
 
-export default function ImportCSV() {
+export default function ImportCSV({
+  csvs,
+  year,
+  setYear,
+  fileToUpload,
+  handleUploadCSV,
+  handleSubmitCSV,
+  isUploadingCSV,
+}) {
+  const lastTenYears = Array.from(
+    { length: 17 },
+    (_, i) => new Date().getFullYear() - i
+  );
+
+  const isYearAlreadyUploaded = (year) => {
+    return csvs.results.some((csv) => csv.year == year);
+  };
+
   return (
     <Box pt={6} pb={12}>
       <Heading fontSize={19}>Import CSV</Heading>
@@ -27,7 +39,13 @@ export default function ImportCSV() {
       </Text>
       <Divider mt={4} mb={4} />
 
-      <Stack maxW={385} w="full" spacing={8}>
+      <Stack
+        as="form"
+        onSubmit={handleSubmitCSV}
+        maxW={385}
+        w="full"
+        spacing={8}
+      >
         <Stack>
           <HStack justify="space-between">
             <Text>Upload CSV</Text>
@@ -60,7 +78,7 @@ export default function ImportCSV() {
                 border="1px solid lightgrey"
                 borderStyle="dashed"
               >
-                <Text>Upload CSV</Text>
+                <Text>{fileToUpload?.name || "Upload CSV"}</Text>
 
                 <Icon as={MdOutlineCloudUpload} />
               </HStack>
@@ -68,22 +86,51 @@ export default function ImportCSV() {
             <Input
               pos="absolute"
               top={0}
+              isRequired
               w="full"
               cursor="pointer"
               h="full"
               opacity={0}
               type="file"
+              onChange={handleUploadCSV}
+              accept=".xlsx, .xls, .csv"
             />
           </Box>
         </Stack>
 
         <Stack>
           <Text>CSV year</Text>
-          <Select h={61} placeholder="Select year" size="lg"></Select>
+          <Select
+            value={year}
+            onChange={(event) => setYear(event.target.value)}
+            h={61}
+            isRequired
+            placeholder="Select year"
+            size="lg"
+          >
+            {lastTenYears.map((year) => (
+              <option
+                disabled={isYearAlreadyUploaded(year)}
+                key={year}
+                value={year}
+              >
+                {year}
+              </option>
+            ))}
+          </Select>
         </Stack>
 
         <HStack justify="flex-end">
-          <Button w={183} h={61} size="lg" colorScheme="primary" rounded={8}>
+          <Button
+            type="submit"
+            w={183}
+            h={61}
+            size="lg"
+            isLoading={isUploadingCSV}
+            loadingText="Uploading..."
+            colorScheme="primary"
+            rounded={8}
+          >
             Confirm Upload
           </Button>
         </HStack>

@@ -1,13 +1,7 @@
 import {
   Box,
-  Button,
   Divider,
   Heading,
-  HStack,
-  Icon,
-  Input,
-  Select,
-  Stack,
   Tab,
   TabList,
   TabPanel,
@@ -17,11 +11,13 @@ import {
 } from "@chakra-ui/react";
 import AdminLayout from "components/AdminLayout/AdminLayout";
 import React from "react";
-import { MdOutlineCloudUpload } from "react-icons/md";
 import ImportCSV from "./components/ImportCSV";
 import ManageCSV from "./components/ManageCSV";
+import useViewAndManageHook from "./useViewAndManageHook";
 
 export default function DataManagement() {
+  const data = useViewAndManageHook();
+
   return (
     <AdminLayout>
       <Box pt={[8, 8, 16]} pl={["6%", "6%", 16]} pr={["6%", "6%", 12]}>
@@ -46,10 +42,10 @@ export default function DataManagement() {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <ImportCSV />
+              <ImportCSV {...data} />
             </TabPanel>
             <TabPanel>
-              <ManageCSV />
+              <ManageCSV {...data} />
             </TabPanel>
           </TabPanels>
         </Tabs>

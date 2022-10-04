@@ -35,7 +35,8 @@ import KeywordFilterTable from "./components/KeywordFilterTable";
 import useDataAnalyticsHook from "./useDataAnalyticsHook";
 
 export default function DataAnalytics() {
-  const { analytics, period, setPeriod } = useDataAnalyticsHook();
+  const { analytics, periodOptions, period, setPeriod, cardPeriodText } =
+    useDataAnalyticsHook();
 
   return (
     <AdminLayout>
@@ -51,11 +52,11 @@ export default function DataAnalytics() {
             w="fit-content"
             bg="white"
           >
-            <option value="day">Per day</option>
-            <option value="week">Per week</option>
-            <option value="month">Per month</option>
-            <option value="year">Per year</option>
-            <option value="lifetime">Lifetime</option>
+            {periodOptions.map((period) => (
+              <option key={period.value} value={period.value}>
+                {period.name}
+              </option>
+            ))}
           </Select>
         </HStack>
 
@@ -71,7 +72,12 @@ export default function DataAnalytics() {
           </VStack>
         )}
 
-        {analytics && <AnalyticsCard analytics={analytics} />}
+        {analytics && (
+          <AnalyticsCard
+            analytics={analytics}
+            cardPeriodText={cardPeriodText}
+          />
+        )}
 
         {analytics && <KeywordFilterTable analytics={analytics} />}
       </Box>

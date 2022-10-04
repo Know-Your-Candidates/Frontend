@@ -3,6 +3,7 @@ import userReducer from "./slices/userSlice";
 import candidateReducer from "./slices/candidateSlice";
 import analyticsReducer from "./slices/analyticsSlice";
 import adminReducer from "./slices/adminSlice";
+import csvReducer from "./slices/csvSlice";
 
 //Import individual slices and configure store
 
@@ -11,6 +12,7 @@ const combinedReducer = combineReducers({
   candidates: candidateReducer,
   analytics: analyticsReducer,
   admins: adminReducer,
+  csvs: csvReducer,
 });
 
 const rootReducer = (state, action) => {

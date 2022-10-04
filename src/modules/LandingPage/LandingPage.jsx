@@ -168,7 +168,11 @@ export default function LandingPage() {
               <Text>✅ How many times they have contested for a position</Text>
             </Stack>
             <Flex pt={7}>
-              <Button colorScheme="primary" rounded={12}>
+              <Button
+                onClick={() => Router.push("/search")}
+                colorScheme="primary"
+                rounded={12}
+              >
                 Search now
               </Button>
             </Flex>
@@ -205,7 +209,11 @@ export default function LandingPage() {
                 </Text>
               </Stack>
               <Flex pt={7}>
-                <Button colorScheme="primary" rounded={12}>
+                <Button
+                  onClick={() => Router.push("/search")}
+                  colorScheme="primary"
+                  rounded={12}
+                >
                   Search now
                 </Button>
               </Flex>

@@ -106,6 +106,7 @@ export default function useSearchHook() {
         ...filterList,
       })
     ).unwrap();
+    window.scrollTo(0, 0); //Always start at the top when a page changes
     setPage(selected);
   };
 

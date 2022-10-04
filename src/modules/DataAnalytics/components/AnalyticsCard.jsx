@@ -1,7 +1,7 @@
 import { Center, Heading, HStack, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 
-export default function AnalyticsCard({ analytics }) {
+export default function AnalyticsCard({ analytics, cardPeriodText }) {
   const { total_filters, searches } = analytics;
   return (
     <Stack spacing={6} direction={["column", "column", "row", "row"]}>
@@ -37,7 +37,7 @@ export default function AnalyticsCard({ analytics }) {
           </Center>
         </HStack>
         <Text fontSize={12} color="gray.400">
-          Analytics for today
+          Analytics {cardPeriodText}
         </Text>
       </Stack> */}
 
@@ -62,7 +62,7 @@ export default function AnalyticsCard({ analytics }) {
           </Stack>
         </HStack>
         <Text fontSize={12} color="gray.400">
-          Analytics for today
+          Analytics {cardPeriodText}
         </Text>
       </Stack>
 
@@ -87,7 +87,7 @@ export default function AnalyticsCard({ analytics }) {
           </Stack>
         </HStack>
         <Text fontSize={12} color="gray.400">
-          Analytics for today
+          Analytics {cardPeriodText}
         </Text>
       </Stack>
     </Stack>

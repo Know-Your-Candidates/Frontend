@@ -34,11 +34,20 @@ import {
   Text,
   Checkbox,
 } from "@chakra-ui/react";
-import { MdOutlineCloudUpload } from "react-icons/md";
+import { MdOutlineCloudUpload, MdOutlineDeleteOutline } from "react-icons/md";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import Router from "next/router";
+import Moment from "react-moment";
+import "moment-timezone";
+import ConfirmDeleteCSV from "./ConfirmDeleteCSV";
 
-export default function ManageCSV() {
+export default function ManageCSV({
+  csvs,
+  csvToDelete,
+  setCsvToDelete,
+  handleConfirmCSVDelete,
+  isDeletingCSV,
+}) {
   return (
     <Box pt={8} pb={12}>
       <Heading fontSize={19}>Manage CSV</Heading>
@@ -47,7 +56,7 @@ export default function ManageCSV() {
           Manage list of all uploaded CSV
         </Text>
 
-        <HStack>
+        {/* <HStack>
           <Menu placement="bottom-end">
             <MenuButton
               as={Button}
@@ -71,7 +80,7 @@ export default function ManageCSV() {
             <option value="imported">Imported CSV</option>
             <option value="deleted">Deleted CSV</option>
           </Select>
-        </HStack>
+        </HStack> */}
       </Stack>
 
       <TableContainer
@@ -85,33 +94,58 @@ export default function ManageCSV() {
           <Thead>
             <Tr>
               <Th bg="gray.200" borderLeftRadius={16}>
-                State
+                Year
               </Th>
-              <Th bg="gray.200">S-Code</Th>
+              <Th bg="gray.200">Status</Th>
+              <Th bg="gray.200">Uploaded at</Th>
               <Th bg="gray.200" borderRightRadius={16}>
-                SD
+                Actions
               </Th>
             </Tr>
           </Thead>
           <Tbody>
-            <Tr cursor="pointer" onClick={() => Router.push("/admin/data/12")}>
-              <Td>Kwara</Td>
-              <Td>34-KD</Td>
-              <Td>IL west</Td>
-            </Tr>
-            <Tr cursor="pointer" onClick={() => Router.push("/admin/data/12")}>
-              <Td>Abuja</Td>
-              <Td>34-KD</Td>
-              <Td>IL west</Td>
-            </Tr>
-            <Tr cursor="pointer" onClick={() => Router.push("/admin/data/12")}>
-              <Td>Lagos</Td>
-              <Td>34-KD</Td>
-              <Td>IL west</Td>
-            </Tr>
+            {csvs.results.map((csv) => (
+              <Tr key={csv.id}>
+                <Td>{csv.year}</Td>
+                <Td
+                  color={
+                    csv.status
+                      ? csv.status === "Success"
+                        ? "green.500"
+                        : "red.500"
+                      : "yellow.600"
+                  }
+                >
+                  {csv.status || "Pending"}
+                </Td>
+                <Td>
+                  <Moment format="Do MMMM, YYYY hh:mm a">
+                    {csv.uploaded_at}
+                  </Moment>
+                </Td>
+                <Td>
+                  <Button
+                    variant="link"
+                    isDisabled={isDeletingCSV}
+                    onClick={() => setCsvToDelete(csv)}
+                    colorScheme="red"
+                    leftIcon={<MdOutlineDeleteOutline />}
+                  >
+                    Delete
+                  </Button>
+                </Td>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>
+      <ConfirmDeleteCSV
+        csv={csvToDelete}
+        isOpen={!!csvToDelete}
+        onClose={() => setCsvToDelete(null)}
+        handleConfirmDelete={handleConfirmCSVDelete}
+        isDeleting={isDeletingCSV}
+      />
     </Box>
   );
 }
