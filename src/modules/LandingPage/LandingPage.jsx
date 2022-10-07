@@ -111,6 +111,7 @@ export default function LandingPage() {
                   value={searchQuery}
                   onChange={(event) => setSearchQuery(event.target.value)}
                   variant="unstyled"
+                  placeholder="Search..."
                   size="lg"
                 />
                 <Divider orientation="vertical" maxH={38} />
