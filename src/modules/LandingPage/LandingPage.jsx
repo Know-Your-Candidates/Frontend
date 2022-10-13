@@ -94,7 +94,7 @@ export default function LandingPage() {
                 align="center"
                 h={[70, 70, 88]}
                 w="full"
-                maxW={718}
+                maxW={600}
                 bg="white"
                 shadow="lg"
                 spacing={[1, 4]}
@@ -114,10 +114,10 @@ export default function LandingPage() {
                   placeholder="Search..."
                   size="lg"
                 />
-                <Divider orientation="vertical" maxH={38} />
+                {/* <Divider orientation="vertical" maxH={38} />
                 <Select variant="unstyled" size={["sm", "sm", "lg"]} maxW={170}>
                   <option value="Political parties">Political parties</option>
-                </Select>
+                </Select> */}
               </HStack>
             </Stack>
             <Show ssr={false} above="lg">

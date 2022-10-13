@@ -95,15 +95,15 @@ export default function AspirantDetails({
                   maxW={[210, 400, 450, 465]}
                   h={[130, 250, 300]}
                   rounded={12}
-                  src={candidate_image}
+                  src={party_image}
                 />
-                <Image
+                {/* <Image
                   maxW={[81, 160, 260, "full"]}
                   h={["auto", "auto", "auto", "full"]}
                   rounded={12}
                   objectFit="cover"
                   src={party_image}
-                />
+                /> */}
               </Stack>
               <Box>
                 <Text fontWeight="bold" fontSize={[16, 20, 24]}>

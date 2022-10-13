@@ -30,18 +30,18 @@ export default function AspirantCard({ aspirant, setSelectedAspirant }) {
         bgSize="cover"
         bgPos="center"
         bgRepeat="no-repeat"
-        bgImage={aspirant.candidate_image}
+        bgImage={aspirant.party_image}
         w="full"
         p={3}
         h={237}
       >
-        <Image
+        {/* <Image
           shadow="lg"
           objectFit="cover"
           boxSize={70}
           rounded={8}
           src={aspirant.party_image}
-        />
+        /> */}
       </Stack>
       <HStack pt={3} justify="space-between">
         <Text fontWeight="bold" textTransform="capitalize">
