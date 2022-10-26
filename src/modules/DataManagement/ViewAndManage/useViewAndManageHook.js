@@ -21,12 +21,12 @@ export default function useViewAndManageHook() {
       return;
     }
 
-    const csvSizeInMB = csvFile.size / 1024 / 1024;
+    // const csvSizeInMB = csvFile.size / 1024 / 1024;
 
-    if (csvSizeInMB > 5) {
-      toastError("Please upload a file that is less than 5MB", null, " ");
-      return;
-    }
+    // if (csvSizeInMB > 5) {
+    //   toastError("Please upload a file that is less than 5MB", null, " ");
+    //   return;
+    // }
 
     setFileToUpload(csvFile);
     // event.target.value = "";
