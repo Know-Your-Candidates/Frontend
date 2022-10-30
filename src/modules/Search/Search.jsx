@@ -138,6 +138,14 @@ export default function Search() {
             updateFilterList={updateFilterList}
           />
 
+          {candidates?.count && (
+            <Box w="full">
+              <Text w="full" textAlign="left" fontWeight="bold">
+                {candidates?.count} results found
+              </Text>
+            </Box>
+          )}
+
           <Grid
             templateColumns={[
               "repeat(1, 1fr)",
@@ -170,7 +178,7 @@ export default function Search() {
           )}
           <br />
 
-          {!isLoading && (
+          {!isLoading && candidates.count && (
             <ReactPaginate
               previousLabel="<"
               nextLabel=">"
