@@ -28,7 +28,7 @@ export const createCsv = createAsyncThunk(
     try {
       const {
         data: { data },
-      } = await Axios.post(`${BASE_API_URL}/candidates/files/`, formData, {
+      } = await Axios.post(`${BASE_API_URL}/candidates/upload/`, formData, {
         headers: {
           "content-type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("kyc_acccess_token")}`,

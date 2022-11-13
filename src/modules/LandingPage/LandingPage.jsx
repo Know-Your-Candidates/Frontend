@@ -75,7 +75,7 @@ export default function LandingPage() {
                   fontWeight="900"
                   color="gray.700"
                 >
-                  Know everything about the people to vote for
+                  Know more about the candidate you want to vote for!
                 </Heading>
                 <Image
                   maxW={[36, 40, 40, 40, "full"]}
@@ -83,11 +83,11 @@ export default function LandingPage() {
                 />
               </Box>
               <HStack w="full" maxW={454} bg="gray.100" p={4} rounded={8}>
-                <Text>🔍 Search anyone you want</Text>
+                <Text>🔍 Search for your choice candidate</Text>
               </HStack>
 
               <HStack w="full" maxW={454} bg="gray.100" p={4} rounded={8}>
-                <Text>🔥 Add filters to know more</Text>
+                <Text>🔥 Filter for speed</Text>
               </HStack>
 
               <HStack
@@ -161,11 +161,11 @@ export default function LandingPage() {
               fontSize={[28, 36, 40, 48, 52]}
               lineHeight={["auto", "auto", "auto", "auto", "80px"]}
             >
-              We elevate your understanding of the candidates
+              Get a better understanding of the candidates contesting!
             </Heading>
             <Stack spacing={4} pt={3}>
-              <Text>✅ You will see age information</Text>
-              <Text>✅ Party they belong to</Text>
+              <Text>✅ How old they are</Text>
+              <Text>✅ The parties they are representing</Text>
               <Text>✅ How many times they have contested for a position</Text>
             </Stack>
             <Flex pt={7}>
@@ -200,7 +200,8 @@ export default function LandingPage() {
                 fontSize={[28, 36, 40, 48, 50]}
                 lineHeight={["auto", "auto", "auto", "auto", "80px"]}
               >
-                You can know about any party & election in Nigerian history
+                Choose intelligently! Know more about the candidate you want to
+                vote for.
               </Heading>
               <Stack spacing={4} pt={3}>
                 <Text fontWeight={200}>
