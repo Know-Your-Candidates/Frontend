@@ -48,13 +48,11 @@ export default function useSearchHook() {
   };
 
   useEffect(() => {
-    fetchInitialOptions();
-  }, []);
-
-  useEffect(() => {
     if (urlQuery.query) {
       setQuery(urlQuery.query);
-      // debouncedOnChange(urlQuery.query);
+      debouncedOnChange(urlQuery.query);
+    } else {
+      fetchInitialOptions();
     }
   }, [urlQuery]);
 
@@ -83,8 +81,6 @@ export default function useSearchHook() {
     }, 300),
     []
   );
-
-  console.log(page);
 
   const changeFilterOptions = (updates) => {
     setFilterOptions((prev) => ({ ...prev, ...updates }));
