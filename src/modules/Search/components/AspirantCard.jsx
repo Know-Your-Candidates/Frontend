@@ -1,24 +1,4 @@
-import { Search2Icon } from "@chakra-ui/icons";
-import {
-  Box,
-  Button,
-  Divider,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  HStack,
-  Icon,
-  Image,
-  Input,
-  Select,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
-import { Logo } from "components/Logo/Logo";
-import React from "react";
-import { BsArrowLeft } from "react-icons/bs";
-import { CgOptions } from "react-icons/cg";
+import { Button, GridItem, HStack, Icon, Stack, Text } from "@chakra-ui/react";
 import { GrFlag } from "react-icons/gr";
 
 export default function AspirantCard({ aspirant, setSelectedAspirant }) {
@@ -30,7 +10,7 @@ export default function AspirantCard({ aspirant, setSelectedAspirant }) {
         bgSize="cover"
         bgPos="center"
         bgRepeat="no-repeat"
-        bgImage={aspirant.party_image}
+        bgImage={aspirant.party?.image}
         w="full"
         p={3}
         h={237}
@@ -40,7 +20,7 @@ export default function AspirantCard({ aspirant, setSelectedAspirant }) {
           objectFit="cover"
           boxSize={70}
           rounded={8}
-          src={aspirant.party_image}
+          src={aspirant.party?.image}
         /> */}
       </Stack>
       <HStack pt={3} justify="space-between">
@@ -50,7 +30,7 @@ export default function AspirantCard({ aspirant, setSelectedAspirant }) {
 
         <HStack>
           <Icon as={GrFlag} />
-          <Text>{aspirant.party}</Text>
+          <Text textTransform="uppercase">{aspirant.party?.name}</Text>
         </HStack>
       </HStack>
       <HStack mt={2} justify="space-between">

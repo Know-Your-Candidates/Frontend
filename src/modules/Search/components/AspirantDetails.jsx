@@ -38,7 +38,6 @@ export default function AspirantDetails({
     id,
     name,
     party,
-    party_image,
     qualifications,
     position,
   } = selectedAspirant;
@@ -95,19 +94,23 @@ export default function AspirantDetails({
                   maxW={[210, 400, 450, 465]}
                   h={[130, 250, 300]}
                   rounded={12}
-                  src={party_image}
+                  src={party?.image}
                 />
                 {/* <Image
                   maxW={[81, 160, 260, "full"]}
                   h={["auto", "auto", "auto", "full"]}
                   rounded={12}
                   objectFit="cover"
-                  src={party_image}
+                  src={party?.image}
                 /> */}
               </Stack>
               <Box>
-                <Text fontWeight="bold" fontSize={[16, 20, 24]}>
-                  {party} Aspirant 🇳🇬
+                <Text
+                  textTransform="uppercase"
+                  fontWeight="bold"
+                  fontSize={[16, 20, 24]}
+                >
+                  {party?.name} Aspirant 🇳🇬
                 </Text>
                 {age && <Text>{age} years old</Text>}
               </Box>
@@ -154,7 +157,9 @@ export default function AspirantDetails({
                 <Text color="gray.500" w="full" maxW={[100, 160]}>
                   Party:
                 </Text>
-                <Text fontWeight="semibold">{party}</Text>
+                <Text textTransform="uppercase" fontWeight="semibold">
+                  {party?.name}
+                </Text>
               </HStack>
 
               <HStack spacing={[8, 16]}>

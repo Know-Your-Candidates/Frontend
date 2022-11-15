@@ -109,11 +109,7 @@ export default function ImportCSV({
             size="lg"
           >
             {lastTenYears.map((year) => (
-              <option
-                disabled={isYearAlreadyUploaded(year)}
-                key={year}
-                value={year}
-              >
+              <option key={year} value={year}>
                 {year}
               </option>
             ))}
