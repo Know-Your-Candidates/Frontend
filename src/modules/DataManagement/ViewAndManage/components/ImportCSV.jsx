@@ -24,7 +24,7 @@ export default function ImportCSV({
 }) {
   const lastTenYears = Array.from(
     { length: 17 },
-    (_, i) => new Date().getFullYear() - i
+    (_, i) => new Date().getFullYear() + 1 - i
   );
 
   const isYearAlreadyUploaded = (year) => {
