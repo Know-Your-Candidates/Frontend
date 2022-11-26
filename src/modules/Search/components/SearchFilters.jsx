@@ -158,12 +158,11 @@ export default function SearchFilters({
 
       <Drawer
         placement="bottom"
-        size="xl"
         onClose={modalDisclosure.onClose}
         isOpen={modalDisclosure.isOpen}
       >
         <DrawerOverlay />
-        <DrawerContent borderTopRadius={12}>
+        <DrawerContent height="90vh" borderTopRadius={12}>
           <DrawerCloseButton />
           <DrawerHeader py={3} borderBottomWidth="1px">
             <HStack justify="space-between">

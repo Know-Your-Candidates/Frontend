@@ -138,7 +138,7 @@ export default function Search() {
             updateFilterList={updateFilterList}
           />
 
-          {candidates?.count && (
+          {candidates?.count !== undefined && (
             <Box w="full">
               <Text w="full" textAlign="left" fontWeight="bold">
                 {candidates?.count} results found
