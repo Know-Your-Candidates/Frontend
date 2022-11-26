@@ -23,15 +23,14 @@ const filters = {
   polling_unit: [],
 };
 
-export default function useSearchHook() {
+export default function useSearchHook(urlQuery) {
   const [page, setPage] = useState(0);
   const { candidates, loading } = useSelector((state) => state.candidates);
   const dispatch = useDispatch();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(urlQuery || "");
   const [filterList, setFilterList] = useState({});
   const [filterOptions, setFilterOptions] = useState(filters);
   const [selectedAspirant, setSelectedAspirant] = useState(null);
-  const { query: urlQuery } = useRouter();
 
   const fetchInitialOptions = async () => {
     try {
@@ -48,13 +47,8 @@ export default function useSearchHook() {
   };
 
   useEffect(() => {
-    if (urlQuery.query) {
-      setQuery(urlQuery.query);
-      debouncedOnChange(urlQuery.query);
-    } else {
-      fetchInitialOptions();
-    }
-  }, [urlQuery]);
+    fetchInitialOptions();
+  }, []);
 
   useEffect(() => {
     dispatch(

@@ -30,7 +30,7 @@ import AspirantDetails from "./components/AspirantDetails";
 import SearchFilters from "./components/SearchFilters";
 import useSearchHook from "./useSearch";
 
-export default function Search() {
+export default function Search({ urlQuery }) {
   const {
     query,
     setQuery,
@@ -47,7 +47,7 @@ export default function Search() {
     page,
     setPage,
     handlePageClick,
-  } = useSearchHook();
+  } = useSearchHook(urlQuery);
 
   if (selectedAspirant) {
     return (
