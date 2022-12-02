@@ -6,6 +6,7 @@ import { toastError, toastSuccess } from "utils/helpers";
 export default function useViewAndManageHook() {
   const [year, setYear] = useState("");
   const [fileToUpload, setFileToUpload] = useState(null);
+  const [fileType, setFileType] = useState("");
   const [csvToDelete, setCsvToDelete] = useState(null);
 
   const dispatch = useDispatch();
@@ -38,6 +39,8 @@ export default function useViewAndManageHook() {
     const formData = new FormData();
     // append the details of the form data
     formData.append("year", year);
+    formData.append("type", fileType);
+
     // append the file
     formData.append("file", fileToUpload);
 
@@ -66,6 +69,8 @@ export default function useViewAndManageHook() {
     setYear,
     fileToUpload,
     setFileToUpload,
+    fileType,
+    setFileType,
     handleUploadCSV,
     handleSubmitCSV,
     csvs,

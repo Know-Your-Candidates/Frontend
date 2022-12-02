@@ -18,6 +18,8 @@ export default function ImportCSV({
   year,
   setYear,
   fileToUpload,
+  fileType,
+  setFileType,
   handleUploadCSV,
   handleSubmitCSV,
   isUploadingCSV,
@@ -96,6 +98,21 @@ export default function ImportCSV({
               accept=".xlsx, .xls, .csv"
             />
           </Box>
+        </Stack>
+
+        <Stack>
+          <Text>CSV Type</Text>
+          <Select
+            value={fileType}
+            onChange={(event) => setFileType(event.target.value)}
+            h={61}
+            isRequired
+            placeholder="Select CSV type"
+            size="lg"
+          >
+            <option value="CandidateData">Candidate Data</option>
+            <option value="LocationData">Location Data</option>
+          </Select>
         </Stack>
 
         <Stack>
