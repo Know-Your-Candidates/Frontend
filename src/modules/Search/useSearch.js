@@ -73,7 +73,7 @@ export default function useSearchHook(urlQuery) {
 
       setPage(0);
     }, 300),
-    []
+    [filterList]
   );
 
   const changeFilterOptions = (updates) => {
