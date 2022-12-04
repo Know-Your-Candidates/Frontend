@@ -90,7 +90,7 @@ export default function LandingPage() {
                 <Text>🔥 Filter for speed</Text>
               </HStack>
 
-              <HStack
+              {/* <HStack
                 align="center"
                 h={[70, 70, 88]}
                 w="full"
@@ -114,11 +114,11 @@ export default function LandingPage() {
                   placeholder="Search..."
                   size="lg"
                 />
-                {/* <Divider orientation="vertical" maxH={38} />
+                <Divider orientation="vertical" maxH={38} />
                 <Select variant="unstyled" size={["sm", "sm", "lg"]} maxW={170}>
                   <option value="Political parties">Political parties</option>
-                </Select> */}
-              </HStack>
+                </Select>
+              </HStack> */}
             </Stack>
             <Show ssr={false} above="lg">
               <Image src="/images/hero-image.png" />
