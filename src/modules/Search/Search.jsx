@@ -39,6 +39,8 @@ export default function Search({ urlQuery }) {
     isLoading,
     filterOptions,
     changeFilterOptions,
+    locationIds,
+    setLocationIds,
     filterList,
     updateFilterList,
     selectedAspirant,
@@ -124,78 +126,90 @@ export default function Search({ urlQuery }) {
         pb={[9, 10, 40]}
         px="6%"
       >
-        <Stack spacing={8} align="center" w="full" maxW="7xl">
-          {query && (
-            <Heading fontSize={32} textAlign="center">
-              Results for “{query}”
-            </Heading>
-          )}
+        {!!query.trim() || !!Object.keys(filterList).length ? (
+          <Stack spacing={8} align="center" w="full" maxW="7xl">
+            {query && (
+              <Heading fontSize={32} textAlign="center">
+                Results for “{query}”
+              </Heading>
+            )}
 
-          <SearchFilters
-            filterList={filterList}
-            filterOptions={filterOptions}
-            changeFilterOptions={changeFilterOptions}
-            updateFilterList={updateFilterList}
-          />
-
-          {candidates?.count !== undefined && (
-            <Box w="full">
-              <Text w="full" textAlign="left" fontWeight="bold">
-                {candidates?.count} results found
-              </Text>
-            </Box>
-          )}
-
-          <Grid
-            templateColumns={[
-              "repeat(1, 1fr)",
-              "repeat(2, 1fr)",
-              "repeat(3, 1fr)",
-              "repeat(4, 1fr)",
-            ]}
-            columnGap={8}
-            rowGap={12}
-          >
-            {candidates.results.map((aspirant) => (
-              <AspirantCard
-                aspirant={aspirant}
-                setSelectedAspirant={setSelectedAspirant}
-                key={aspirant.id}
-              />
-            ))}
-          </Grid>
-
-          {isLoading && (
-            <VStack spacing={3}>
-              <BarLoader
-                height={6}
-                width={250}
-                color={theme.colors.primary["500"]}
-                radius={8}
-              />
-              <Text color="gray.500">Loading candidates...</Text>
-            </VStack>
-          )}
-          <br />
-
-          {!isLoading && candidates.count && (
-            <ReactPaginate
-              previousLabel="<"
-              nextLabel=">"
-              breakLabel="..."
-              breakClassName="break"
-              initialPage={page}
-              forcePage={page}
-              pageCount={Math.ceil(candidates.count / 25)}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={3}
-              disableInitialCallback
-              onPageChange={handlePageClick}
-              containerClassName="pagination"
-              activeClassName="active"
+            <SearchFilters
+              filterList={filterList}
+              filterOptions={filterOptions}
+              changeFilterOptions={changeFilterOptions}
+              updateFilterList={updateFilterList}
+              locationIds={locationIds}
+              setLocationIds={setLocationIds}
             />
-          )}
-        </Stack>
+
+            {candidates?.count !== undefined && (
+              <Box w="full">
+                <Text w="full" textAlign="left" fontWeight="bold">
+                  {candidates?.count} results found
+                </Text>
+              </Box>
+            )}
+
+            <Grid
+              templateColumns={[
+                "repeat(1, 1fr)",
+                "repeat(2, 1fr)",
+                "repeat(3, 1fr)",
+                "repeat(4, 1fr)",
+              ]}
+              columnGap={8}
+              rowGap={12}
+            >
+              {candidates.results.map((aspirant) => (
+                <AspirantCard
+                  aspirant={aspirant}
+                  setSelectedAspirant={setSelectedAspirant}
+                  key={aspirant.id}
+                />
+              ))}
+            </Grid>
+
+            {isLoading && (
+              <VStack spacing={3}>
+                <BarLoader
+                  height={6}
+                  width={250}
+                  color={theme.colors.primary["500"]}
+                  radius={8}
+                />
+                <Text color="gray.500">Loading candidates...</Text>
+              </VStack>
+            )}
+            <br />
+
+            {!isLoading && candidates.count && (
+              <ReactPaginate
+                previousLabel="<"
+                nextLabel=">"
+                breakLabel="..."
+                breakClassName="break"
+                initialPage={page}
+                forcePage={page}
+                pageCount={Math.ceil(candidates.count / 25)}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={3}
+                disableInitialCallback
+                onPageChange={handlePageClick}
+                containerClassName="pagination"
+                activeClassName="active"
+              />
+            )}
+          </Stack>
+        ) : (
+          <Heading
+            textAlign="center"
+            fontWeight={["normal", "bold"]}
+            fontSize={["md", "2xl"]}
+          >
+            Enter a search query or use the filters to get results
+          </Heading>
+        )}
       </Stack>
     </Box>
   );

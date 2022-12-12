@@ -23,22 +23,33 @@ import {
 import React, { useEffect, useState } from "react";
 import { CgOptions } from "react-icons/cg";
 import { useDispatch } from "react-redux";
-import { fetchFilterOptions } from "redux/slices/candidateSlice";
+import {
+  fetchFilterOptions,
+  fetchLocationIds,
+} from "redux/slices/candidateSlice";
 
 export default function SearchFilters({
   filterOptions,
   changeFilterOptions,
   filterList,
   updateFilterList,
+  locationIds,
+  setLocationIds,
 }) {
   const [selectedFilters, setSelectedFilters] = useState({});
   const dispatch = useDispatch();
 
+  const getLocationIds = async (payload) => {
+    const ids = await dispatch(fetchLocationIds(payload)).unwrap();
+
+    setLocationIds(ids);
+  };
+
   useEffect(() => {
     changeFilterOptions({
-      senatorial_district: undefined,
-      federal_constituency: undefined,
-      state_constituency: undefined,
+      // senatorial_district: undefined,
+      // federal_constituency: undefined,
+      // state_constituency: undefined,
       lga: undefined,
       ward: undefined,
       polling_unit: undefined,
@@ -47,9 +58,9 @@ export default function SearchFilters({
     const fetchStateFilterDependants = async () => {
       const stateDependants = await Promise.all(
         [
-          "senatorial_district",
-          "federal_constituency",
-          "state_constituency",
+          // "senatorial_district",
+          // "federal_constituency",
+          // "state_constituency",
           "lga",
         ].map((key) => {
           return dispatch(
@@ -58,6 +69,7 @@ export default function SearchFilters({
         })
       );
 
+      await getLocationIds({ state: selectedFilters.state });
       changeFilterOptions(Object.assign({}, ...stateDependants));
     };
     fetchStateFilterDependants();
@@ -71,6 +83,7 @@ export default function SearchFilters({
         fetchFilterOptions({ lga: selectedFilters.lga, filter: "ward" })
       ).unwrap();
 
+      await getLocationIds({ lga: selectedFilters.lga });
       changeFilterOptions(wards);
     };
     fetchWards();
@@ -86,10 +99,16 @@ export default function SearchFilters({
           filter: "polling_unit",
         })
       ).unwrap();
+
+      await getLocationIds({ ward: selectedFilters.ward });
       changeFilterOptions(units);
     };
     fetchUnits();
   }, [selectedFilters.ward]);
+
+  useEffect(() => {
+    getLocationIds({ polling_unit: selectedFilters.polling_unit });
+  }, [selectedFilters.polling_unit]);
 
   const changeFilterValue = (updates) => {
     if (Object.keys(updates)[0] === "age_bracket") {
@@ -113,6 +132,7 @@ export default function SearchFilters({
   const resetFilters = () => {
     updateFilterList({});
     setSelectedFilters({});
+    setLocationIds([]);
     modalDisclosure.onClose();
     collapsibleDisclosure.onClose();
   };

@@ -15,7 +15,7 @@ export default function SearchPage({ urlQuery }) {
 export const getServerSideProps = async ({ query }) => {
   return {
     props: {
-      urlQuery: query?.query,
+      urlQuery: query?.query || null,
     },
   };
 };

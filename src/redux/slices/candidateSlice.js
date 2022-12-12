@@ -53,6 +53,23 @@ export const fetchFilterOptions = createAsyncThunk(
   }
 );
 
+export const fetchLocationIds = createAsyncThunk(
+  "candidates/fetchLocationIds",
+  async (fetchPayload, thunkAPI) => {
+    try {
+      const {
+        data: { data },
+      } = await Axios.get(`${BASE_API_URL}/candidates/location/get_ids`, {
+        params: fetchPayload,
+      });
+      return data;
+    } catch ({ response }) {
+      console.log(response);
+      return thunkAPI.rejectWithValue(response);
+    }
+  }
+);
+
 export const createCandidate = createAsyncThunk(
   "candidates/createCandidate",
   async (createPayload, thunkAPI) => {

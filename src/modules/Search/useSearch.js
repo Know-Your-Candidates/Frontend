@@ -15,9 +15,9 @@ const filters = {
   party: [],
   qualifications: [],
   state: [],
-  senatorial_district: [],
-  federal_constituency: [],
-  state_constituency: [],
+  // senatorial_district: [],
+  // federal_constituency: [],
+  // state_constituency: [],
   lga: [],
   ward: [],
   polling_unit: [],
@@ -28,6 +28,7 @@ export default function useSearchHook(urlQuery) {
   const { candidates, loading } = useSelector((state) => state.candidates);
   const dispatch = useDispatch();
   const [query, setQuery] = useState(urlQuery || "");
+  const [locationIds, setLocationIds] = useState([]);
   const [filterList, setFilterList] = useState({});
   const [filterOptions, setFilterOptions] = useState(filters);
   const [selectedAspirant, setSelectedAspirant] = useState(null);
@@ -56,6 +57,11 @@ export default function useSearchHook(urlQuery) {
         page: 1,
         name: query || undefined,
         ...filterList,
+        state: undefined,
+        lga: undefined,
+        ward: undefined,
+        polling_unit: undefined,
+        location: locationIds.join(",") || undefined,
       })
     );
     setPage(0);
@@ -106,6 +112,8 @@ export default function useSearchHook(urlQuery) {
     debouncedOnChange,
     filterOptions,
     changeFilterOptions,
+    locationIds,
+    setLocationIds,
     filterList,
     updateFilterList,
     candidates,
