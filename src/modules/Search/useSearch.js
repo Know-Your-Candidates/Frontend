@@ -74,6 +74,11 @@ export default function useSearchHook(urlQuery) {
           page: 1,
           name: value || undefined,
           ...filterList,
+          state: undefined,
+          lga: undefined,
+          ward: undefined,
+          polling_unit: undefined,
+          location: locationIds.join(",") || undefined,
         })
       ).unwrap();
 
@@ -100,6 +105,11 @@ export default function useSearchHook(urlQuery) {
         page: selected + 1,
         name: query || undefined,
         ...filterList,
+        state: undefined,
+        lga: undefined,
+        ward: undefined,
+        polling_unit: undefined,
+        location: locationIds.join(",") || undefined,
       })
     ).unwrap();
     window.scrollTo(0, 0); //Always start at the top when a page changes
