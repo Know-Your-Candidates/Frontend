@@ -184,24 +184,25 @@ export default function Search({ urlQuery }) {
               )}
 
               <br />
-
-              {!isLoading && candidates.count && (
-                <ReactPaginate
-                  previousLabel="<"
-                  nextLabel=">"
-                  breakLabel="..."
-                  breakClassName="break"
-                  initialPage={page}
-                  forcePage={page}
-                  pageCount={Math.ceil(candidates.count / 25)}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={3}
-                  disableInitialCallback
-                  onPageChange={handlePageClick}
-                  containerClassName="pagination"
-                  activeClassName="active"
-                />
-              )}
+              <HStack justify="center">
+                {!isLoading && candidates.count && (
+                  <ReactPaginate
+                    previousLabel="<"
+                    nextLabel=">"
+                    breakLabel="..."
+                    breakClassName="break"
+                    initialPage={page}
+                    forcePage={page}
+                    pageCount={Math.ceil(candidates.count / 25)}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={3}
+                    disableInitialCallback
+                    onPageChange={handlePageClick}
+                    containerClassName="pagination"
+                    activeClassName="active"
+                  />
+                )}
+              </HStack>
             </Stack>
           ) : (
             <Heading

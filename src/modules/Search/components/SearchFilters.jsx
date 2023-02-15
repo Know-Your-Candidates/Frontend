@@ -1,3 +1,4 @@
+import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import {
   Button,
   CloseButton,
@@ -19,6 +20,7 @@ import {
   Show,
   StackDivider,
   Collapse,
+  Input,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { CgOptions } from "react-icons/cg";
@@ -36,6 +38,7 @@ export default function SearchFilters({
   locationIds,
   setLocationIds,
 }) {
+  const [showAllFilters, setShowAllFilters] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({});
   const dispatch = useDispatch();
 
@@ -137,6 +140,21 @@ export default function SearchFilters({
     collapsibleDisclosure.onClose();
   };
 
+  const toggleShowAllFilters = () => {
+    if (showAllFilters) {
+      setSelectedFilters((prev) => ({
+        ...prev,
+        qualifications: undefined,
+        state: undefined,
+        lga: undefined,
+        ward: undefined,
+        polling_unit: undefined,
+        polling_unit_code: undefined,
+      }));
+    }
+    setShowAllFilters(!showAllFilters);
+  };
+
   const noAppliedFilters = !Object.values(filterList).filter(Boolean).length;
 
   return (
@@ -206,52 +224,20 @@ export default function SearchFilters({
           </DrawerHeader>
           <DrawerBody overflowY="auto" overflowX="hidden" px={4}>
             <Stack divider={<StackDivider />} spacing={0}>
-              {Object.keys(filterOptions).map((filterKey) => (
-                <Select
-                  key={filterKey}
-                  h={51}
-                  variant="flushed"
-                  placeholder={filterKey.split("_").join(" ").toUpperCase()}
-                  value={selectedFilters[filterKey] || ""}
-                  onChange={(event) =>
-                    changeFilterValue({
-                      [filterKey]: event.target.value || undefined,
-                    })
-                  }
-                >
-                  {filterOptions[filterKey]?.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </Select>
-              ))}
-            </Stack>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
-
-      <Collapse in={collapsibleDisclosure.isOpen} animateOpacity>
-        <HStack bg="gray.50" p={6} rounded={8}>
-          <Wrap spacingX={8} spacingY={5}>
-            {Object.keys(filterOptions).map((filterKey) => (
-              <WrapItem key={filterKey}>
-                <Stack>
-                  <Text textTransform="capitalize" fontWeight={500} as="label">
-                    {filterKey.split("_").join(" ")}
-                  </Text>
+              {Object.keys(filterOptions)
+                .slice(0, showAllFilters ? 20 : 4)
+                .map((filterKey) => (
                   <Select
-                    variant="outline"
-                    placeholder="Select"
-                    size="lg"
-                    w="full"
+                    key={filterKey}
+                    h={51}
+                    variant="flushed"
+                    placeholder={filterKey.split("_").join(" ").toUpperCase()}
                     value={selectedFilters[filterKey] || ""}
                     onChange={(event) =>
                       changeFilterValue({
                         [filterKey]: event.target.value || undefined,
                       })
                     }
-                    minW={173}
                   >
                     {filterOptions[filterKey]?.map((option) => (
                       <option key={option} value={option}>
@@ -259,21 +245,126 @@ export default function SearchFilters({
                       </option>
                     ))}
                   </Select>
+                ))}
+
+              <Input
+                h={51}
+                variant="flushed"
+                placeholder="Polling unit code"
+                type="number"
+                value={selectedFilters["polling_unit_code"] || ""}
+                onChange={(event) =>
+                  changeFilterValue({
+                    polling_unit_code: event.target.value || undefined,
+                  })
+                }
+              />
+              <Stack pt={8}>
+                <Button
+                  leftIcon={
+                    showAllFilters ? <ChevronUpIcon /> : <ChevronDownIcon />
+                  }
+                  textDecor="underline"
+                  onClick={toggleShowAllFilters}
+                  minW={173}
+                  colorScheme="primary"
+                  size="lg"
+                  variant="link"
+                >
+                  Show {showAllFilters ? "less" : "more"} filters
+                </Button>
+              </Stack>
+            </Stack>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+
+      <Collapse in={collapsibleDisclosure.isOpen} animateOpacity>
+        <Stack spacing={4} bg="gray.50" p={6} rounded={8}>
+          <Wrap spacingX={8} spacingY={5}>
+            {Object.keys(filterOptions)
+              .slice(0, showAllFilters ? 20 : 4)
+              .map((filterKey) => (
+                <WrapItem key={filterKey}>
+                  <Stack>
+                    <Text
+                      textTransform="capitalize"
+                      fontWeight={500}
+                      as="label"
+                    >
+                      {filterKey.split("_").join(" ")}
+                    </Text>
+                    <Select
+                      variant="outline"
+                      placeholder="Select"
+                      size="lg"
+                      w="full"
+                      value={selectedFilters[filterKey] || ""}
+                      onChange={(event) =>
+                        changeFilterValue({
+                          [filterKey]: event.target.value || undefined,
+                        })
+                      }
+                      minW={173}
+                    >
+                      {filterOptions[filterKey]?.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </Select>
+                  </Stack>
+                </WrapItem>
+              ))}
+            {showAllFilters && (
+              <WrapItem>
+                <Stack>
+                  <Text textTransform="capitalize" fontWeight={500} as="label">
+                    Polling Unit Code
+                  </Text>
+                  <Input
+                    variant="outline"
+                    placeholder="Enter code"
+                    size="lg"
+                    type="number"
+                    value={selectedFilters["polling_unit_code"] || ""}
+                    onChange={(event) =>
+                      changeFilterValue({
+                        polling_unit_code: event.target.value || undefined,
+                      })
+                    }
+                    minW={173}
+                  />
                 </Stack>
               </WrapItem>
-            ))}
-            <WrapItem alignItems="flex-end">
+            )}
+
+            <WrapItem alignItems="center" pt={8}>
               <Button
-                onClick={confirmFilters}
+                leftIcon={
+                  showAllFilters ? <ChevronUpIcon /> : <ChevronDownIcon />
+                }
+                textDecor="underline"
+                onClick={toggleShowAllFilters}
                 minW={173}
                 colorScheme="primary"
                 size="lg"
+                variant="link"
               >
-                Apply
+                Show {showAllFilters ? "less" : "more"} filters
               </Button>
             </WrapItem>
           </Wrap>
-        </HStack>
+          <Button
+            onClick={confirmFilters}
+            w="full"
+            maxW={173}
+            colorScheme="primary"
+            size="lg"
+          >
+            Apply
+          </Button>
+        </Stack>
       </Collapse>
     </Stack>
   );

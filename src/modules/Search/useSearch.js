@@ -8,11 +8,11 @@ import {
 import debounce from "lodash.debounce";
 
 const filters = {
-  gender: ["Male", "Female"],
   age_bracket: ["18 - 30", "30 - 45", "46 - 59", "60 - 79", "80 +"],
   year: [],
   position: [],
   party: [],
+  gender: ["Male", "Female"],
   qualifications: [],
   state: [],
   // senatorial_district: [],

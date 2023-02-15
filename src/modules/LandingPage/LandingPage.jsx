@@ -90,6 +90,19 @@ export default function LandingPage() {
                 <Text>🔥 Filter for speed</Text>
               </HStack>
 
+              <Button
+                w="full"
+                maxW={454}
+                h={14}
+                fontSize={20}
+                shadow="xl"
+                onClick={() => Router.push("/search")}
+                colorScheme="primary"
+                rounded={12}
+              >
+                Start Searching
+              </Button>
+
               {/* <HStack
                 align="center"
                 h={[70, 70, 88]}
