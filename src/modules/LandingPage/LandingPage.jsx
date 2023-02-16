@@ -71,11 +71,12 @@ export default function LandingPage() {
             <Stack spacing={6} w="full">
               <Box>
                 <Heading
-                  fontSize={[40, 52, 52, 52, 64]}
+                  fontSize={[40, 52, 52, 52, 60]}
                   fontWeight="900"
                   color="gray.700"
                 >
-                  Know more about the candidate you want to vote for!
+                  Do you know the candidate you are about to vote for beyond
+                  their party names?
                 </Heading>
                 <Image
                   maxW={[36, 40, 40, 40, "full"]}
@@ -174,7 +175,7 @@ export default function LandingPage() {
               fontSize={[28, 36, 40, 48, 52]}
               lineHeight={["auto", "auto", "auto", "auto", "80px"]}
             >
-              Get a better understanding of the candidates contesting!
+              We are here to empower you to make more informed choices!
             </Heading>
             <Stack spacing={4} pt={3}>
               <Text>✅ How old they are</Text>
