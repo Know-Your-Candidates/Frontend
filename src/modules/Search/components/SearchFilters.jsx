@@ -59,21 +59,12 @@ export default function SearchFilters({
     });
     if (!selectedFilters.state) return;
     const fetchStateFilterDependants = async () => {
-      const stateDependants = await Promise.all(
-        [
-          // "senatorial_district",
-          // "federal_constituency",
-          // "state_constituency",
-          "lga",
-        ].map((key) => {
-          return dispatch(
-            fetchFilterOptions({ state: selectedFilters.state, filter: key })
-          ).unwrap();
-        })
-      );
+      const lgas = await dispatch(
+        fetchFilterOptions({ state: selectedFilters.state, filter: "lga" })
+      ).unwrap();
 
       await getLocationIds({ state: selectedFilters.state });
-      changeFilterOptions(Object.assign({}, ...stateDependants));
+      changeFilterOptions(lgas);
     };
     fetchStateFilterDependants();
   }, [selectedFilters.state]);
@@ -110,6 +101,7 @@ export default function SearchFilters({
   }, [selectedFilters.ward]);
 
   useEffect(() => {
+    if (!selectedFilters.polling_unit) return;
     getLocationIds({ polling_unit: selectedFilters.polling_unit });
   }, [selectedFilters.polling_unit]);
 
@@ -326,7 +318,6 @@ export default function SearchFilters({
                     variant="outline"
                     placeholder="Enter code"
                     size="lg"
-                    type="number"
                     value={selectedFilters["polling_unit_code"] || ""}
                     onChange={(event) =>
                       changeFilterValue({
