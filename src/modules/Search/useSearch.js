@@ -8,19 +8,19 @@ import {
 import debounce from "lodash.debounce";
 
 const filters = {
+  state: [],
+  lga: [],
+  ward: [],
+  polling_unit: [],
   age_bracket: ["18 - 30", "30 - 45", "46 - 59", "60 - 79", "80 +"],
   year: [],
   position: [],
   party: [],
   gender: ["Male", "Female"],
   qualifications: [],
-  state: [],
   // senatorial_district: [],
   // federal_constituency: [],
   // state_constituency: [],
-  lga: [],
-  ward: [],
-  polling_unit: [],
 };
 
 export default function useSearchHook(urlQuery) {
@@ -36,11 +36,9 @@ export default function useSearchHook(urlQuery) {
   const fetchInitialOptions = async () => {
     try {
       const results = await Promise.all(
-        Object.keys(filterOptions)
-          .slice(2, 7)
-          .map((key) => {
-            return dispatch(fetchFilterOptions({ filter: key })).unwrap();
-          })
+        ["state", "year", "position", "party", "qualifications"].map((key) => {
+          return dispatch(fetchFilterOptions({ filter: key })).unwrap();
+        })
       );
 
       changeFilterOptions(Object.assign({}, ...results));

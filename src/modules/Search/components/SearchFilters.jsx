@@ -57,7 +57,10 @@ export default function SearchFilters({
       ward: undefined,
       polling_unit: undefined,
     });
-    if (!selectedFilters.state) return;
+    if (!selectedFilters.state) {
+      setLocationIds([]);
+      return;
+    }
     const fetchStateFilterDependants = async () => {
       const lgas = await dispatch(
         fetchFilterOptions({ state: selectedFilters.state, filter: "lga" })
@@ -308,27 +311,25 @@ export default function SearchFilters({
                   </Stack>
                 </WrapItem>
               ))}
-            {showAllFilters && (
-              <WrapItem>
-                <Stack>
-                  <Text textTransform="capitalize" fontWeight={500} as="label">
-                    Polling Unit Code
-                  </Text>
-                  <Input
-                    variant="outline"
-                    placeholder="Enter code"
-                    size="lg"
-                    value={selectedFilters["polling_unit_code"] || ""}
-                    onChange={(event) =>
-                      changeFilterValue({
-                        polling_unit_code: event.target.value || undefined,
-                      })
-                    }
-                    minW={173}
-                  />
-                </Stack>
-              </WrapItem>
-            )}
+            <WrapItem>
+              <Stack>
+                <Text textTransform="capitalize" fontWeight={500} as="label">
+                  Polling Unit Code
+                </Text>
+                <Input
+                  variant="outline"
+                  placeholder="Enter code"
+                  size="lg"
+                  value={selectedFilters["polling_unit_code"] || ""}
+                  onChange={(event) =>
+                    changeFilterValue({
+                      polling_unit_code: event.target.value || undefined,
+                    })
+                  }
+                  minW={173}
+                />
+              </Stack>
+            </WrapItem>
 
             <WrapItem alignItems="center" pt={8}>
               <Button
