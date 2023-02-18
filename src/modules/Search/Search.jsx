@@ -119,7 +119,7 @@ export default function Search({ urlQuery }) {
         direction="row"
         w="full"
         justify="center"
-        pt={24}
+        pt={[16, 20, 24]}
         roundedTop={20}
         bg="white"
         mt={-12}

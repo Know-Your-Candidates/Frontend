@@ -154,9 +154,9 @@ export default function SearchFilters({
 
   return (
     <Stack spacing={4} w="full">
-      <HStack justify="space-between">
+      {/* <HStack justify="space-between">
         <HStack>
-          {/* <Show ssr above="lg">
+          <Show ssr above="lg">
             <Button
               onClick={collapsibleDisclosure.onToggle}
               variant={noAppliedFilters ? "outline" : "solid"}
@@ -164,7 +164,7 @@ export default function SearchFilters({
             >
               Use Filters
             </Button>
-          </Show> */}
+          </Show>
 
           <Show ssr below="lg">
             <Button
@@ -181,9 +181,10 @@ export default function SearchFilters({
             <CloseButton onClick={collapsibleDisclosure.onClose} />
           </Show>
         )}
-      </HStack>
+      </HStack> */}
 
-      <Drawer
+      <Show ssr below="lg">
+        {/* <Drawer
         placement="bottom"
         onClose={modalDisclosure.onClose}
         isOpen={modalDisclosure.isOpen}
@@ -211,62 +212,63 @@ export default function SearchFilters({
               </HStack>
             </HStack>
           </DrawerHeader>
-          <DrawerBody overflowY="auto" overflowX="hidden" px={4}>
-            <Stack divider={<StackDivider />} spacing={0}>
-              {Object.keys(filterOptions)
-                .slice(0, showAllFilters ? 20 : 4)
-                .map((filterKey) => (
-                  <Select
-                    key={filterKey}
-                    h={51}
-                    variant="flushed"
-                    placeholder={filterKey.split("_").join(" ").toUpperCase()}
-                    value={selectedFilters[filterKey] || ""}
-                    onChange={(event) =>
-                      changeFilterValue({
-                        [filterKey]: event.target.value || undefined,
-                      })
-                    }
-                  >
-                    {filterOptions[filterKey]?.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </Select>
-                ))}
-
-              <Input
+          <DrawerBody overflowY="auto" overflowX="hidden" px={4}> */}
+        <Stack divider={<StackDivider />} spacing={0}>
+          {Object.keys(filterOptions)
+            .slice(0, showAllFilters ? 20 : 4)
+            .map((filterKey) => (
+              <Select
+                key={filterKey}
                 h={51}
                 variant="flushed"
-                placeholder="Polling unit code"
-                type="number"
-                value={selectedFilters["polling_unit_code"] || ""}
+                placeholder={filterKey.split("_").join(" ").toUpperCase()}
+                value={selectedFilters[filterKey] || ""}
                 onChange={(event) =>
                   changeFilterValue({
-                    polling_unit_code: event.target.value || undefined,
+                    [filterKey]: event.target.value || undefined,
                   })
                 }
-              />
-              <Stack pt={8}>
-                <Button
-                  leftIcon={
-                    showAllFilters ? <ChevronUpIcon /> : <ChevronDownIcon />
-                  }
-                  textDecor="underline"
-                  onClick={toggleShowAllFilters}
-                  minW={173}
-                  colorScheme="primary"
-                  size="lg"
-                  variant="link"
-                >
-                  {showAllFilters ? "Simple" : "Advanced"} Search
-                </Button>
-              </Stack>
-            </Stack>
-          </DrawerBody>
+              >
+                {filterOptions[filterKey]?.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </Select>
+            ))}
+
+          <Input
+            h={51}
+            variant="flushed"
+            placeholder="Polling unit code"
+            type="number"
+            value={selectedFilters["polling_unit_code"] || ""}
+            onChange={(event) =>
+              changeFilterValue({
+                polling_unit_code: event.target.value || undefined,
+              })
+            }
+          />
+          <Stack pt={8}>
+            <Button
+              leftIcon={
+                showAllFilters ? <ChevronUpIcon /> : <ChevronDownIcon />
+              }
+              textDecor="underline"
+              onClick={toggleShowAllFilters}
+              minW={173}
+              colorScheme="primary"
+              size="lg"
+              variant="link"
+            >
+              {showAllFilters ? "Simple" : "Advanced"} Search
+            </Button>
+          </Stack>
+        </Stack>
+        {/* </DrawerBody>
         </DrawerContent>
-      </Drawer>
+      </Drawer> */}
+      </Show>
 
       {/* <Collapse in={collapsibleDisclosure.isOpen} animateOpacity> */}
       <Show ssr above="lg">
