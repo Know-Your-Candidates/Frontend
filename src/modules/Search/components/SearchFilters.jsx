@@ -355,29 +355,28 @@ export default function SearchFilters({
               </Button>
             </WrapItem>
           </Wrap>
-          <HStack spacing={4}>
-            <Button
-              onClick={confirmFilters}
-              w="full"
-              maxW={173}
-              colorScheme="primary"
-              size="lg"
-            >
-              Get Candidates
-            </Button>
-            <Button
-              size="lg"
-              color="gray.700"
-              onClick={resetFilters}
-              variant="outline"
-            >
-              Reset Filters
-            </Button>
-          </HStack>
         </Stack>
       </Show>
-
       {/* </Collapse> */}
+      <HStack spacing={4}>
+        <Button
+          onClick={confirmFilters}
+          w="full"
+          maxW={173}
+          colorScheme="primary"
+          size="lg"
+        >
+          Get Candidates
+        </Button>
+        <Button
+          size="lg"
+          color="gray.700"
+          onClick={resetFilters}
+          variant="outline"
+        >
+          Reset Filters
+        </Button>
+      </HStack>
     </Stack>
   );
 }
