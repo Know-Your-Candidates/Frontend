@@ -141,7 +141,7 @@ export default function LandingPage() {
         </Stack>
       </Stack>
 
-      <HStack justify="center" py={[16, 100]} px="6%">
+      {/* <HStack justify="center" py={[16, 100]} px="6%">
         <Stack
           w="full"
           direction={["column", "column", "column", "row"]}
@@ -193,7 +193,7 @@ export default function LandingPage() {
             </Flex>
           </Stack>
         </Stack>
-      </HStack>
+      </HStack> */}
 
       <HStack mb={[50, 50, 150]} justify="center" bg="green.50" py={14} px="6%">
         <Stack
