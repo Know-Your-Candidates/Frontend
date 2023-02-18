@@ -88,7 +88,7 @@ export default function Footer() {
         </Wrap>
 
         <Text fontSize={12} color="gray.500" textAlign="center">
-          Copyright 2022 - Know Your Candidate
+          Copyright {new Date().getFullYear()} - Know Your Candidate
         </Text>
       </Box>
     </HStack>

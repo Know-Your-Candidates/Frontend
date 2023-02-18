@@ -156,7 +156,7 @@ export default function SearchFilters({
     <Stack spacing={4} w="full">
       <HStack justify="space-between">
         <HStack>
-          <Show ssr above="lg">
+          {/* <Show ssr above="lg">
             <Button
               onClick={collapsibleDisclosure.onToggle}
               variant={noAppliedFilters ? "outline" : "solid"}
@@ -164,7 +164,7 @@ export default function SearchFilters({
             >
               Use Filters
             </Button>
-          </Show>
+          </Show> */}
 
           <Show ssr below="lg">
             <Button
@@ -173,12 +173,6 @@ export default function SearchFilters({
               rightIcon={<CgOptions />}
             >
               Use Filters
-            </Button>
-          </Show>
-
-          <Show ssr above="lg">
-            <Button onClick={resetFilters} variant="outline">
-              Reset Filters
             </Button>
           </Show>
         </HStack>
@@ -208,7 +202,7 @@ export default function SearchFilters({
                   colorScheme="primary"
                   variant="link"
                 >
-                  Apply Filters
+                  Get Candidates
                 </Button>
 
                 <Button onClick={resetFilters} size="sm" variant="link">
@@ -266,7 +260,7 @@ export default function SearchFilters({
                   size="lg"
                   variant="link"
                 >
-                  Show {showAllFilters ? "less" : "more"} filters
+                  {showAllFilters ? "Simple" : "Advanced"} Search
                 </Button>
               </Stack>
             </Stack>
@@ -274,7 +268,8 @@ export default function SearchFilters({
         </DrawerContent>
       </Drawer>
 
-      <Collapse in={collapsibleDisclosure.isOpen} animateOpacity>
+      {/* <Collapse in={collapsibleDisclosure.isOpen} animateOpacity> */}
+      <Show ssr above="lg">
         <Stack spacing={4} bg="gray.50" p={6} rounded={8}>
           <Wrap spacingX={8} spacingY={5}>
             {Object.keys(filterOptions)
@@ -311,10 +306,21 @@ export default function SearchFilters({
                   </Stack>
                 </WrapItem>
               ))}
+
+            {!showAllFilters && (
+              <WrapItem alignItems="center">
+                <Stack>
+                  <Text textTransform="capitalize" fontWeight={500} as="label">
+                    OR
+                  </Text>
+                </Stack>
+              </WrapItem>
+            )}
+
             <WrapItem>
               <Stack>
                 <Text textTransform="capitalize" fontWeight={500} as="label">
-                  Polling Unit Code
+                  PVC Code
                 </Text>
                 <Input
                   variant="outline"
@@ -331,7 +337,7 @@ export default function SearchFilters({
               </Stack>
             </WrapItem>
 
-            <WrapItem alignItems="center" pt={8}>
+            <WrapItem alignItems="center">
               <Button
                 leftIcon={
                   showAllFilters ? <ChevronUpIcon /> : <ChevronDownIcon />
@@ -343,21 +349,33 @@ export default function SearchFilters({
                 size="lg"
                 variant="link"
               >
-                Show {showAllFilters ? "less" : "more"} filters
+                {showAllFilters ? "Simple" : "Advanced"} Search
               </Button>
             </WrapItem>
           </Wrap>
-          <Button
-            onClick={confirmFilters}
-            w="full"
-            maxW={173}
-            colorScheme="primary"
-            size="lg"
-          >
-            Apply
-          </Button>
+          <HStack spacing={4}>
+            <Button
+              onClick={confirmFilters}
+              w="full"
+              maxW={173}
+              colorScheme="primary"
+              size="lg"
+            >
+              Get Candidates
+            </Button>
+            <Button
+              size="lg"
+              color="gray.700"
+              onClick={resetFilters}
+              variant="outline"
+            >
+              Reset Filters
+            </Button>
+          </HStack>
         </Stack>
-      </Collapse>
+      </Show>
+
+      {/* </Collapse> */}
     </Stack>
   );
 }

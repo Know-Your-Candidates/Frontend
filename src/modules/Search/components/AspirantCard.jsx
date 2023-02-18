@@ -33,8 +33,15 @@ export default function AspirantCard({ aspirant, setSelectedAspirant }) {
           <Text textTransform="uppercase">{aspirant.party?.name}</Text>
         </HStack>
       </HStack>
-      <HStack mt={2} justify="space-between">
+      <HStack mt={0} justify="space-between">
         <Text>{aspirant.gender}</Text>
+      </HStack>
+      <HStack mt={0} justify="space-between">
+        <Text>
+          {aspirant.position
+            ?.map(({ id, position, year }) => `${position.name} (${year})`)
+            .join(", ")}
+        </Text>
       </HStack>
 
       <Button
