@@ -29,6 +29,7 @@ import AspirantCard from "./components/AspirantCard";
 import AspirantDetails from "./components/AspirantDetails";
 import SearchFilters from "./components/SearchFilters";
 import useSearchHook from "./useSearch";
+import { candidatePositions } from "utils/constants";
 
 export default function Search({ urlQuery }) {
   const {
@@ -143,7 +144,7 @@ export default function Search({ urlQuery }) {
           />
 
           {!!query.trim() || !!Object.keys(filterList).length ? (
-            <Stack>
+            <Stack w="full">
               {candidates?.count !== undefined && (
                 <Box w="full">
                   <Text w="full" textAlign="left" fontWeight="bold">
@@ -152,24 +153,51 @@ export default function Search({ urlQuery }) {
                 </Box>
               )}
 
-              <Grid
-                templateColumns={[
-                  "repeat(1, 1fr)",
-                  "repeat(2, 1fr)",
-                  "repeat(3, 1fr)",
-                  "repeat(4, 1fr)",
-                ]}
-                columnGap={8}
-                rowGap={12}
-              >
-                {candidates.results.map((aspirant) => (
-                  <AspirantCard
-                    aspirant={aspirant}
-                    setSelectedAspirant={setSelectedAspirant}
-                    key={aspirant.id}
-                  />
-                ))}
-              </Grid>
+              <Stack>
+                {candidatePositions.map((position) => {
+                  const results = candidates?.results.filter((candidate) =>
+                    candidate.position.some(
+                      ({ position: positionType }) =>
+                        positionType.name === position
+                    )
+                  );
+
+                  return (
+                    <Stack key={position} pt={8}>
+                      <Heading>{position}S</Heading>
+                      <Divider />
+
+                      <Grid
+                        pt={4}
+                        templateColumns={[
+                          "repeat(1, 1fr)",
+                          "repeat(2, 1fr)",
+                          "repeat(3, 1fr)",
+                          "repeat(4, 1fr)",
+                        ]}
+                        columnGap={8}
+                        rowGap={12}
+                      >
+                        {!!results?.length ? (
+                          results.map((aspirant) => (
+                            <AspirantCard
+                              aspirant={aspirant}
+                              setSelectedAspirant={setSelectedAspirant}
+                              key={aspirant.id}
+                            />
+                          ))
+                        ) : (
+                          <GridItem gridColumn="1/-1">
+                            <Text textAlign="center" textTransform="uppercase">
+                              No {position}s to display
+                            </Text>
+                          </GridItem>
+                        )}
+                      </Grid>
+                    </Stack>
+                  );
+                })}
+              </Stack>
 
               {isLoading && (
                 <VStack spacing={3}>

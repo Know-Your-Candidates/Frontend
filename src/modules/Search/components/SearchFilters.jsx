@@ -120,7 +120,8 @@ export default function SearchFilters({
   const modalDisclosure = useDisclosure();
   const collapsibleDisclosure = useDisclosure();
 
-  const confirmFilters = () => {
+  const confirmFilters = (event) => {
+    event.preventDefault();
     updateFilterList(selectedFilters);
 
     modalDisclosure.onClose();
@@ -153,7 +154,7 @@ export default function SearchFilters({
   const noAppliedFilters = !Object.values(filterList).filter(Boolean).length;
 
   return (
-    <Stack spacing={4} w="full">
+    <Stack as="form" onSubmit={confirmFilters} spacing={4} w="full">
       {/* <HStack justify="space-between">
         <HStack>
           <Show ssr above="lg">
@@ -216,11 +217,12 @@ export default function SearchFilters({
         <Stack divider={<StackDivider />} spacing={0}>
           {Object.keys(filterOptions)
             .slice(0, showAllFilters ? 20 : 4)
-            .map((filterKey) => (
+            .map((filterKey, index) => (
               <Select
                 key={filterKey}
                 h={51}
                 variant="flushed"
+                isRequired={!selectedFilters["polling_unit_code"] && index < 4}
                 placeholder={filterKey.split("_").join(" ").toUpperCase()}
                 value={selectedFilters[filterKey] || ""}
                 onChange={(event) =>
@@ -240,9 +242,10 @@ export default function SearchFilters({
           <Input
             h={51}
             variant="flushed"
-            placeholder="Polling unit code"
+            placeholder="PVC code"
             type="number"
             value={selectedFilters["polling_unit_code"] || ""}
+            isRequired={!selectedFilters["polling_unit"]}
             onChange={(event) =>
               changeFilterValue({
                 polling_unit_code: event.target.value || undefined,
@@ -276,7 +279,7 @@ export default function SearchFilters({
           <Wrap spacingX={8} spacingY={5}>
             {Object.keys(filterOptions)
               .slice(0, showAllFilters ? 20 : 4)
-              .map((filterKey) => (
+              .map((filterKey, index) => (
                 <WrapItem key={filterKey}>
                   <Stack>
                     <Text
@@ -290,6 +293,9 @@ export default function SearchFilters({
                       variant="outline"
                       placeholder="Select"
                       size="lg"
+                      isRequired={
+                        !selectedFilters["polling_unit_code"] && index < 4
+                      }
                       w="full"
                       value={selectedFilters[filterKey] || ""}
                       onChange={(event) =>
@@ -329,6 +335,7 @@ export default function SearchFilters({
                   placeholder="Enter code"
                   size="lg"
                   value={selectedFilters["polling_unit_code"] || ""}
+                  isRequired={!selectedFilters["polling_unit"]}
                   onChange={(event) =>
                     changeFilterValue({
                       polling_unit_code: event.target.value || undefined,
@@ -360,7 +367,8 @@ export default function SearchFilters({
       {/* </Collapse> */}
       <HStack spacing={4}>
         <Button
-          onClick={confirmFilters}
+          // onClick={confirmFilters}
+          type="submit"
           w="full"
           maxW={173}
           colorScheme="primary"
@@ -369,6 +377,7 @@ export default function SearchFilters({
           Get Candidates
         </Button>
         <Button
+          type="reset"
           size="lg"
           color="gray.700"
           onClick={resetFilters}

@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearCandidates,
   fetchCandidates,
   fetchFilterOptions,
 } from "redux/slices/candidateSlice";
@@ -50,6 +51,11 @@ export default function useSearchHook(urlQuery) {
   }, []);
 
   useEffect(() => {
+    if (!query && !Object.values(filterList).filter(Boolean).length) {
+      dispatch(clearCandidates());
+      return;
+    }
+
     dispatch(
       fetchCandidates({
         page: 1,

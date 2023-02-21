@@ -157,6 +157,9 @@ const candidateSlice = createSlice({
       delete state.error;
       delete state.success;
     },
+    clearCandidates: (state, { payload }) => {
+      state.candidates = { results: [] };
+    },
   },
   extraReducers: {
     [fetchCandidates.pending]: (state) => {
@@ -167,7 +170,7 @@ const candidateSlice = createSlice({
     },
     [fetchCandidates.fulfilled]: (state, action) => {
       state.success = "FETCH_CANDIDATES";
-      state.candidates = action.payload;
+      state.candidates.results = action.payload;
       delete state.loading;
       delete state.error;
     },
@@ -247,6 +250,6 @@ const candidateSlice = createSlice({
     },
   },
 });
-export const { clearStates } = candidateSlice.actions;
+export const { clearStates, clearCandidates } = candidateSlice.actions;
 export const candidateActions = candidateSlice.actions;
 export default candidateSlice.reducer;

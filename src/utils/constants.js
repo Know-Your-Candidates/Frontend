@@ -62,3 +62,5 @@ export const navLinks = [
   { name: "Data Analytics", icon: RiShieldCheckLine, href: "/admin/analytics" },
   { name: "Account Management", icon: RiUser3Line, href: "/admin/accounts" },
 ];
+
+export const candidatePositions = ["PRESIDENT", "GOVERNOR", "SENATE"];
