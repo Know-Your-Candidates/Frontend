@@ -243,7 +243,6 @@ export default function SearchFilters({
             h={51}
             variant="flushed"
             placeholder="PVC code"
-            type="number"
             value={selectedFilters["polling_unit_code"] || ""}
             isRequired={!selectedFilters["polling_unit"]}
             onChange={(event) =>
