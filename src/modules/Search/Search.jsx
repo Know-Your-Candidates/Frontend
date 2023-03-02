@@ -164,7 +164,7 @@ export default function Search({ urlQuery }) {
 
                   return (
                     <Stack key={position} pt={8}>
-                      <Heading>{position}S</Heading>
+                      <Heading>{position}</Heading>
                       <Divider />
 
                       <Grid
