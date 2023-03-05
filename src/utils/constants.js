@@ -63,4 +63,10 @@ export const navLinks = [
   { name: "Account Management", icon: RiUser3Line, href: "/admin/accounts" },
 ];
 
-export const candidatePositions = ["PRESIDENT", "GOVERNOR", "SENATE"];
+export const candidatePositions = [
+  "PRESIDENT",
+  "GOVERNOR",
+  "SENATE",
+  "HOUSE OF ASSEMBLY",
+  "HOUSE OF REPRESENTATIVES",
+];
