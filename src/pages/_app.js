@@ -6,6 +6,7 @@ import store from "redux/store";
 import theme from "../theme";
 import { useRouter } from "next/router";
 import * as ga from "../utils/ga";
+import { useEffect } from "react";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
